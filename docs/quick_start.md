@@ -1,0 +1,91 @@
+# Quick Start Guide
+## Install
+1. Install [NodeJS](https://nodejs.org/en)
+1. Run `npm install -g scratchwriter` in a terminal window
+
+## Hello Scratch
+### 1. Create "hello_world.sw"
+Copy and Paste the program:
+```js
+show();
+goto(0,0);
+say("hello world");
+```
+### 2. Compile it!
+Open a Terminal and enter:
+```sh
+sw3 build hello_world.sh
+```
+You should see `"out/hello_world.sb3"` and `out/hello_world.html`
+```
+folder
+  |- hello_world.sw            <-- Source File
+  |- out
+      |- hello_world.sb3       <-- Scratch 3 File
+      |- hello_world.html      <-- Bundled Project Player
+```
+
+### 3. Run "hello_world.html" in your browser
+Copy the full path for `hello_world.html` and paste it into a browser. You should see your project start playing. When you make any changes to your project you can run the build command and reload this page to try them out. You can also use the `watch` command to automatically build your project when changes are detected.
+
+### 4. Upload "hello_world.sb3" to Scratch
+Now that we have confirmed our project runs correctly, we can upload it to Scratch. Create a new Project and select `File > Load from your computer` then navigate to `hello_world.sb3` and select it.
+
+## Upgrading Hello Scratch
+We will need to use some built-in modules. Copy and Paste this code into your "hello_world.sw" file.
+```js
+import "text" as text;
+import "color" as color;
+import "graphics" as graphics;
+```
+Next, let's create a function to draw a frame and call it in a loop.
+```js
+function frame() {
+    // do stuff
+}
+
+while(true) {
+    frame();
+}
+```
+
+We can update the frame() function to clear the screen with a solid color and draw the text "Hello World".
+```js
+function frame() {
+    // clear the screen
+    graphics.fill_rgb(2,8,16);
+
+    // draw "hello world"
+    set_pen_color(color.WHITE);
+    set_pen_size(4);
+    let x = 0;
+    let y = 0 + 12 * sin(timer() * 60);
+    text.draw("Hello Scratch", x, y, text.CENTER, text.CENTER, 24, 1);
+}
+```
+
+## Final Program
+You `hello_world.sw` file should now look like this.
+```js
+import "text" as text;
+import "color" as color;
+import "graphics" as graphics;
+
+function frame() {
+    // clear the screen
+    graphics.fill_rgb(2,8,16);
+
+    // draw "hello world"
+    set_pen_color(color.WHITE);
+    set_pen_size(4);
+    let x = 0;
+    let y = 0 + 12 * sin(timer() * 60);
+    text.draw("Hello Scratch", x, y, text.CENTER, text.CENTER, 24, 1);
+}
+
+while(true) {
+    frame();
+}
+```
+Open the HTML or SB3 file to see the program.
+![Hello World Program Player](./examples/hello_scratch_player.gif)
