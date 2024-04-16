@@ -1,0 +1,2033 @@
+[
+    [
+        {
+            "opcode": "motion_movesteps",
+            "inputs": {
+                "STEPS": {
+                    "value": "10",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "motion_turnright",
+            "inputs": {
+                "DEGREES": {
+                    "value": "15",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "motion_turnright",
+            "inputs": {
+                "DEGREES": {
+                    "value": "15",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "motion_goto",
+            "inputs": {
+                "TO": [
+                    {
+                        "opcode": "motion_goto_menu",
+                        "fields": {
+                            "TO": "_random_"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "motion_gotoxy",
+            "inputs": {
+                "X": {
+                    "value": "0",
+                    "type": "Number"
+                },
+                "Y": {
+                    "value": "0",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "motion_glideto",
+            "inputs": {
+                "SECS": {
+                    "value": "1",
+                    "type": "Number"
+                },
+                "TO": [
+                    {
+                        "opcode": "motion_glideto_menu",
+                        "fields": {
+                            "TO": "_random_"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "motion_glidesecstoxy",
+            "inputs": {
+                "SECS": {
+                    "value": "1",
+                    "type": "Number"
+                },
+                "X": {
+                    "value": "0",
+                    "type": "Number"
+                },
+                "Y": {
+                    "value": "0",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "motion_pointindirection",
+            "inputs": {
+                "DIRECTION": {
+                    "value": "90",
+                    "type": "Angle"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "motion_pointtowards",
+            "inputs": {
+                "TOWARDS": [
+                    {
+                        "opcode": "motion_pointtowards_menu",
+                        "fields": {
+                            "TOWARDS": "_mouse_"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "motion_changexby",
+            "inputs": {
+                "DX": {
+                    "value": "10",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "motion_setx",
+            "inputs": {
+                "X": {
+                    "value": "0",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "motion_changeyby",
+            "inputs": {
+                "DY": {
+                    "value": "10",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "motion_sety",
+            "inputs": {
+                "Y": {
+                    "value": "0",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "motion_ifonedgebounce"
+        }
+    ],
+    [
+        {
+            "opcode": "motion_setrotationstyle",
+            "fields": {
+                "STYLE": "left-right"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "motion_xposition"
+        }
+    ],
+    [
+        {
+            "opcode": "motion_yposition"
+        }
+    ],
+    [
+        {
+            "opcode": "motion_direction"
+        }
+    ],
+    [
+        {
+            "opcode": "looks_sayforsecs",
+            "inputs": {
+                "MESSAGE": {
+                    "value": "Hello!",
+                    "type": "String"
+                },
+                "SECS": {
+                    "value": "2",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "looks_say",
+            "inputs": {
+                "MESSAGE": {
+                    "value": "Hello!",
+                    "type": "String"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "looks_thinkforsecs",
+            "inputs": {
+                "MESSAGE": {
+                    "value": "Hmm...",
+                    "type": "String"
+                },
+                "SECS": {
+                    "value": "2",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "looks_think",
+            "inputs": {
+                "MESSAGE": {
+                    "value": "Hmm...",
+                    "type": "String"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "looks_switchcostumeto",
+            "inputs": {
+                "COSTUME": [
+                    {
+                        "opcode": "looks_costume",
+                        "fields": {
+                            "COSTUME": "costume2"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "looks_nextcostume"
+        }
+    ],
+    [
+        {
+            "opcode": "looks_switchbackdropto",
+            "inputs": {
+                "BACKDROP": [
+                    {
+                        "opcode": "looks_backdrops",
+                        "fields": {
+                            "BACKDROP": "backdrop1"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "looks_nextbackdrop"
+        }
+    ],
+    [
+        {
+            "opcode": "looks_changesizeby",
+            "inputs": {
+                "CHANGE": {
+                    "value": "10",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "looks_setsizeto",
+            "inputs": {
+                "SIZE": {
+                    "value": "100",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "looks_changeeffectby",
+            "inputs": {
+                "CHANGE": {
+                    "value": "25",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "EFFECT": "COLOR"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "looks_seteffectto",
+            "inputs": {
+                "VALUE": {
+                    "value": "0",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "EFFECT": "COLOR"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "looks_cleargraphiceffects"
+        }
+    ],
+    [
+        {
+            "opcode": "looks_show"
+        }
+    ],
+    [
+        {
+            "opcode": "looks_hide"
+        }
+    ],
+    [
+        {
+            "opcode": "looks_gotofrontback",
+            "fields": {
+                "FRONT_BACK": "front"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "looks_goforwardbackwardlayers",
+            "inputs": {
+                "NUM": {
+                    "value": "1",
+                    "type": "Integer"
+                }
+            },
+            "fields": {
+                "FORWARD_BACKWARD": "forward"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "looks_costumenumbername",
+            "fields": {
+                "NUMBER_NAME": "number"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "looks_backdropnumbername",
+            "fields": {
+                "NUMBER_NAME": "number"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "looks_size"
+        }
+    ],
+    [
+        {
+            "opcode": "sound_playuntildone",
+            "inputs": {
+                "SOUND_MENU": [
+                    {
+                        "opcode": "sound_sounds_menu",
+                        "fields": {
+                            "SOUND_MENU": "Meow"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "sound_play",
+            "inputs": {
+                "SOUND_MENU": [
+                    {
+                        "opcode": "sound_sounds_menu",
+                        "fields": {
+                            "SOUND_MENU": "Meow"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "sound_stopallsounds"
+        }
+    ],
+    [
+        {
+            "opcode": "sound_changeeffectby",
+            "inputs": {
+                "VALUE": {
+                    "value": "10",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "EFFECT": "PITCH"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "sound_seteffectto",
+            "inputs": {
+                "VALUE": {
+                    "value": "100",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "EFFECT": "PITCH"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "sound_cleareffects"
+        }
+    ],
+    [
+        {
+            "opcode": "event_whenflagclicked"
+        }
+    ],
+    [
+        {
+            "opcode": "event_whenkeypressed",
+            "fields": {
+                "KEY_OPTION": "space"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "event_whenthisspriteclicked"
+        }
+    ],
+    [
+        {
+            "opcode": "event_whenbackdropswitchesto",
+            "fields": {
+                "BACKDROP": "backdrop1"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "event_whengreaterthan",
+            "inputs": {
+                "VALUE": {
+                    "value": "10",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "WHENGREATERTHANMENU": "LOUDNESS"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "event_whenbroadcastreceived",
+            "fields": {
+                "BROADCAST_OPTION": "message1"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "event_broadcast",
+            "inputs": {
+                "BROADCAST_INPUT": {
+                    "value": "message1",
+                    "type": "Broadcast"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "event_broadcastandwait",
+            "inputs": {
+                "BROADCAST_INPUT": {
+                    "value": "message1",
+                    "type": "Broadcast"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "control_wait",
+            "inputs": {
+                "DURATION": {
+                    "value": "1",
+                    "type": "Positive Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "control_repeat",
+            "inputs": {
+                "TIMES": {
+                    "value": "10",
+                    "type": "Positive integer"
+                },
+                "SUBSTACK": [
+                    {
+                        "opcode": "motion_gotoxy",
+                        "inputs": {
+                            "X": {
+                                "value": "0",
+                                "type": "Number"
+                            },
+                            "Y": {
+                                "value": "0",
+                                "type": "Number"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "control_forever",
+            "inputs": {
+                "SUBSTACK": [
+                    {
+                        "opcode": "motion_gotoxy",
+                        "inputs": {
+                            "X": {
+                                "value": "0",
+                                "type": "Number"
+                            },
+                            "Y": {
+                                "value": "0",
+                                "type": "Number"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "control_if",
+            "inputs": {
+                "SUBSTACK": [
+                    {
+                        "opcode": "motion_gotoxy",
+                        "inputs": {
+                            "X": {
+                                "value": "0",
+                                "type": "Number"
+                            },
+                            "Y": {
+                                "value": "0",
+                                "type": "Number"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "control_if_else",
+            "inputs": {
+                "SUBSTACK": [
+                    {
+                        "opcode": "motion_gotoxy",
+                        "inputs": {
+                            "X": {
+                                "value": "0",
+                                "type": "Number"
+                            },
+                            "Y": {
+                                "value": "0",
+                                "type": "Number"
+                            }
+                        }
+                    }
+                ],
+                "SUBSTACK2": [
+                    {
+                        "opcode": "motion_gotoxy",
+                        "inputs": {
+                            "X": {
+                                "value": "0",
+                                "type": "Number"
+                            },
+                            "Y": {
+                                "value": "0",
+                                "type": "Number"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "control_wait_until"
+        }
+    ],
+    [
+        {
+            "opcode": "control_repeat_until",
+            "inputs": {
+                "SUBSTACK": [
+                    {
+                        "opcode": "motion_gotoxy",
+                        "inputs": {
+                            "X": {
+                                "value": "0",
+                                "type": "Number"
+                            },
+                            "Y": {
+                                "value": "0",
+                                "type": "Number"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "control_stop",
+            "fields": {
+                "STOP_OPTION": "all"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "control_start_as_clone"
+        }
+    ],
+    [
+        {
+            "opcode": "control_create_clone_of",
+            "inputs": {
+                "CLONE_OPTION": [
+                    {
+                        "opcode": "control_create_clone_of_menu",
+                        "fields": {
+                            "CLONE_OPTION": "_myself_"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "control_delete_this_clone"
+        }
+    ],
+    [
+        {
+            "opcode": "control_stop",
+            "fields": {
+                "STOP_OPTION": "this script"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "control_stop",
+            "fields": {
+                "STOP_OPTION": "other scripts in sprite"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_touchingobject",
+            "inputs": {
+                "TOUCHINGOBJECTMENU": [
+                    {
+                        "opcode": "sensing_touchingobjectmenu",
+                        "fields": {
+                            "TOUCHINGOBJECTMENU": "_mouse_"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_touchingcolor",
+            "inputs": {
+                "COLOR": {
+                    "value": "#fa8e3d",
+                    "type": "Color"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_coloristouchingcolor",
+            "inputs": {
+                "COLOR": {
+                    "value": "#c49e95",
+                    "type": "Color"
+                },
+                "COLOR2": {
+                    "value": "#9e4b83",
+                    "type": "Color"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_distanceto",
+            "inputs": {
+                "DISTANCETOMENU": [
+                    {
+                        "opcode": "sensing_distancetomenu",
+                        "fields": {
+                            "DISTANCETOMENU": "_mouse_"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_askandwait",
+            "inputs": {
+                "QUESTION": {
+                    "value": "What's your name?",
+                    "type": "String"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_askandwait",
+            "inputs": {
+                "QUESTION": {
+                    "value": "What's your name?",
+                    "type": "String"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_answer"
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_keypressed",
+            "inputs": {
+                "KEY_OPTION": [
+                    {
+                        "opcode": "sensing_keyoptions",
+                        "fields": {
+                            "KEY_OPTION": "space"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_mousedown"
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_mousex"
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_mousey"
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_setdragmode",
+            "fields": {
+                "DRAG_MODE": "draggable"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_loudness"
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_timer"
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_resettimer"
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_of",
+            "inputs": {
+                "OBJECT": [
+                    {
+                        "opcode": "sensing_of_object_menu",
+                        "fields": {
+                            "OBJECT": "_stage_"
+                        }
+                    }
+                ]
+            },
+            "fields": {
+                "PROPERTY": "backdrop #"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_current",
+            "fields": {
+                "CURRENTMENU": "YEAR"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_dayssince2000"
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_username"
+        }
+    ],
+    [
+        {
+            "opcode": "operator_add",
+            "inputs": {
+                "NUM1": {
+                    "value": "",
+                    "type": "Number"
+                },
+                "NUM2": {
+                    "value": "",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_subtract",
+            "inputs": {
+                "NUM1": {
+                    "value": "",
+                    "type": "Number"
+                },
+                "NUM2": {
+                    "value": "",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_multiply",
+            "inputs": {
+                "NUM1": {
+                    "value": "",
+                    "type": "Number"
+                },
+                "NUM2": {
+                    "value": "",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_divide",
+            "inputs": {
+                "NUM1": {
+                    "value": "",
+                    "type": "Number"
+                },
+                "NUM2": {
+                    "value": "",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_random",
+            "inputs": {
+                "FROM": {
+                    "value": "1",
+                    "type": "Number"
+                },
+                "TO": {
+                    "value": "10",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_gt",
+            "inputs": {
+                "OPERAND1": {
+                    "value": "",
+                    "type": "String"
+                },
+                "OPERAND2": {
+                    "value": "50",
+                    "type": "String"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_lt",
+            "inputs": {
+                "OPERAND1": {
+                    "value": "",
+                    "type": "String"
+                },
+                "OPERAND2": {
+                    "value": "50",
+                    "type": "String"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_equals",
+            "inputs": {
+                "OPERAND1": {
+                    "value": "",
+                    "type": "String"
+                },
+                "OPERAND2": {
+                    "value": "50",
+                    "type": "String"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_and",
+            "inputs": {
+                "OPERAND1": [
+                    {
+                        "opcode": "operator_equals",
+                        "inputs": {
+                            "OPERAND1": {
+                                "value": "",
+                                "type": "String"
+                            },
+                            "OPERAND2": {
+                                "value": "50",
+                                "type": "String"
+                            }
+                        }
+                    }
+                ],
+                "OPERAND2": [
+                    {
+                        "opcode": "operator_equals",
+                        "inputs": {
+                            "OPERAND1": {
+                                "value": "",
+                                "type": "String"
+                            },
+                            "OPERAND2": {
+                                "value": "50",
+                                "type": "String"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_or"
+        }
+    ],
+    [
+        {
+            "opcode": "operator_not",
+            "inputs": {
+                "OPERAND": [
+                    {
+                        "opcode": "operator_equals",
+                        "inputs": {
+                            "OPERAND1": {
+                                "value": "",
+                                "type": "String"
+                            },
+                            "OPERAND2": {
+                                "value": "50",
+                                "type": "String"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_join",
+            "inputs": {
+                "STRING1": {
+                    "value": "apple ",
+                    "type": "String"
+                },
+                "STRING2": {
+                    "value": "banana",
+                    "type": "String"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_letter_of",
+            "inputs": {
+                "LETTER": {
+                    "value": "1",
+                    "type": "Positive integer"
+                },
+                "STRING": {
+                    "value": "apple",
+                    "type": "String"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_length",
+            "inputs": {
+                "STRING": {
+                    "value": "apple",
+                    "type": "String"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_contains",
+            "inputs": {
+                "STRING1": {
+                    "value": "apple",
+                    "type": "String"
+                },
+                "STRING2": {
+                    "value": "a",
+                    "type": "String"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_mod",
+            "inputs": {
+                "NUM1": {
+                    "value": "",
+                    "type": "Number"
+                },
+                "NUM2": {
+                    "value": "",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_round",
+            "inputs": {
+                "NUM": {
+                    "value": "",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_mathop",
+            "inputs": {
+                "NUM": {
+                    "value": "",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "OPERATOR": "abs"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_mathop",
+            "inputs": {
+                "NUM": {
+                    "value": "",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "OPERATOR": "floor"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_mathop",
+            "inputs": {
+                "NUM": {
+                    "value": "",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "OPERATOR": "ceiling"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_mathop",
+            "inputs": {
+                "NUM": {
+                    "value": "",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "OPERATOR": "sqrt"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_mathop",
+            "inputs": {
+                "NUM": {
+                    "value": "",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "OPERATOR": "sin"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_mathop",
+            "inputs": {
+                "NUM": {
+                    "value": "",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "OPERATOR": "cos"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_mathop",
+            "inputs": {
+                "NUM": {
+                    "value": "",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "OPERATOR": "tan"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_mathop",
+            "inputs": {
+                "NUM": {
+                    "value": "",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "OPERATOR": "asin"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_mathop",
+            "inputs": {
+                "NUM": {
+                    "value": "",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "OPERATOR": "acos"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_mathop",
+            "inputs": {
+                "NUM": {
+                    "value": "",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "OPERATOR": "atan"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_mathop",
+            "inputs": {
+                "NUM": {
+                    "value": "",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "OPERATOR": "ln"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_mathop",
+            "inputs": {
+                "NUM": {
+                    "value": "",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "OPERATOR": "e ^"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "operator_mathop",
+            "inputs": {
+                "NUM": {
+                    "value": "",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "OPERATOR": "10 ^"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "data_setvariableto",
+            "inputs": {
+                "VALUE": {
+                    "value": "0",
+                    "type": "String"
+                }
+            },
+            "fields": {
+                "VARIABLE": "my variable"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "data_changevariableby",
+            "inputs": {
+                "VALUE": {
+                    "value": "1",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "VARIABLE": "my variable"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "data_showvariable",
+            "fields": {
+                "VARIABLE": "my variable"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "data_hidevariable",
+            "fields": {
+                "VARIABLE": "my variable"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "data_addtolist",
+            "inputs": {
+                "ITEM": {
+                    "value": "thing",
+                    "type": "String"
+                }
+            },
+            "fields": {
+                "LIST": "my list"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "data_deleteoflist",
+            "inputs": {
+                "INDEX": {
+                    "value": "1",
+                    "type": "Integer"
+                }
+            },
+            "fields": {
+                "LIST": "my list"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "data_deletealloflist",
+            "fields": {
+                "LIST": "my list"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "data_insertatlist",
+            "inputs": {
+                "ITEM": {
+                    "value": "thing",
+                    "type": "String"
+                },
+                "INDEX": {
+                    "value": "1",
+                    "type": "Integer"
+                }
+            },
+            "fields": {
+                "LIST": "my list"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "data_replaceitemoflist",
+            "inputs": {
+                "INDEX": {
+                    "value": "1",
+                    "type": "Integer"
+                },
+                "ITEM": {
+                    "value": "thing",
+                    "type": "String"
+                }
+            },
+            "fields": {
+                "LIST": "my list"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "data_itemoflist",
+            "inputs": {
+                "INDEX": {
+                    "value": "1",
+                    "type": "Integer"
+                }
+            },
+            "fields": {
+                "LIST": "my list"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "data_itemnumoflist",
+            "inputs": {
+                "ITEM": {
+                    "value": "thing",
+                    "type": "String"
+                }
+            },
+            "fields": {
+                "LIST": "my list"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "data_lengthoflist",
+            "fields": {
+                "LIST": "my list"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "data_listcontainsitem",
+            "inputs": {
+                "ITEM": {
+                    "value": "thing",
+                    "type": "String"
+                }
+            },
+            "fields": {
+                "LIST": "my list"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "data_showlist",
+            "fields": {
+                "LIST": "my list"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "data_hidelist",
+            "fields": {
+                "LIST": "my list"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "procedures_definition",
+            "inputs": {
+                "custom_block": [
+                    {
+                        "opcode": "procedures_prototype"
+                    }
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "procedures_call"
+        }
+    ],
+    [
+        {
+            "opcode": "procedures_definition",
+            "inputs": {
+                "custom_block": [
+                    {
+                        "opcode": "procedures_prototype",
+                        "inputs": {
+                            "U@WCZBnIIV=HP_RZauDm": [
+                                {
+                                    "opcode": "argument_reporter_string_number",
+                                    "fields": {
+                                        "VALUE": "input"
+                                    }
+                                }
+                            ],
+                            "8l7mN5/DWlcT(#%$LqkI": [
+                                {
+                                    "opcode": "argument_reporter_boolean",
+                                    "fields": {
+                                        "VALUE": "boolean"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "procedures_call",
+            "inputs": {
+                "U@WCZBnIIV=HP_RZauDm": {
+                    "value": "",
+                    "type": "String"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "music_playDrumForBeats",
+            "inputs": {
+                "DRUM": [
+                    {
+                        "opcode": "music_menu_DRUM",
+                        "fields": {
+                            "DRUM": "1"
+                        }
+                    }
+                ],
+                "BEATS": {
+                    "value": "0.25",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "music_restForBeats",
+            "inputs": {
+                "BEATS": {
+                    "value": "0.25",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "music_playNoteForBeats",
+            "inputs": {
+                "NOTE": [
+                    {
+                        "opcode": "note",
+                        "fields": {
+                            "NOTE": "60"
+                        }
+                    }
+                ],
+                "BEATS": {
+                    "value": "0.25",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "music_setInstrument",
+            "inputs": {
+                "INSTRUMENT": [
+                    {
+                        "opcode": "music_menu_INSTRUMENT",
+                        "fields": {
+                            "INSTRUMENT": "1"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "music_setTempo",
+            "inputs": {
+                "TEMPO": {
+                    "value": "60",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "music_setTempo",
+            "inputs": {
+                "TEMPO": {
+                    "value": "60",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "music_changeTempo",
+            "inputs": {
+                "TEMPO": {
+                    "value": "20",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "music_getTempo"
+        }
+    ],
+    [
+        {
+            "opcode": "pen_clear"
+        }
+    ],
+    [
+        {
+            "opcode": "pen_stamp"
+        }
+    ],
+    [
+        {
+            "opcode": "pen_penDown"
+        }
+    ],
+    [
+        {
+            "opcode": "pen_penUp"
+        }
+    ],
+    [
+        {
+            "opcode": "pen_setPenColorToColor",
+            "inputs": {
+                "COLOR": {
+                    "value": "#766cc8",
+                    "type": "Color"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "pen_changePenColorParamBy",
+            "inputs": {
+                "COLOR_PARAM": [
+                    {
+                        "opcode": "pen_menu_colorParam",
+                        "fields": {
+                            "colorParam": "color"
+                        }
+                    }
+                ],
+                "VALUE": {
+                    "value": "10",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "pen_changePenColorParamBy",
+            "inputs": {
+                "COLOR_PARAM": [
+                    {
+                        "opcode": "pen_menu_colorParam",
+                        "fields": {
+                            "colorParam": "color"
+                        }
+                    }
+                ],
+                "VALUE": {
+                    "value": "10",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "pen_setPenColorParamTo",
+            "inputs": {
+                "COLOR_PARAM": [
+                    {
+                        "opcode": "pen_menu_colorParam",
+                        "fields": {
+                            "colorParam": "color"
+                        }
+                    }
+                ],
+                "VALUE": {
+                    "value": "50",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "pen_changePenSizeBy",
+            "inputs": {
+                "SIZE": {
+                    "value": "1",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "pen_setPenSizeTo",
+            "inputs": {
+                "SIZE": {
+                    "value": "1",
+                    "type": "Number"
+                }
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "motion_goto",
+            "inputs": {
+                "TO": [
+                    {
+                        "opcode": "motion_goto_menu",
+                        "fields": {
+                            "TO": "_mouse_"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "motion_glideto",
+            "inputs": {
+                "SECS": {
+                    "value": "1",
+                    "type": "Number"
+                },
+                "TO": [
+                    {
+                        "opcode": "motion_glideto_menu",
+                        "fields": {
+                            "TO": "_mouse_"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "motion_setrotationstyle",
+            "fields": {
+                "STYLE": "don't rotate"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "motion_setrotationstyle",
+            "fields": {
+                "STYLE": "all around"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "looks_seteffectto",
+            "inputs": {
+                "VALUE": {
+                    "value": "0",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "EFFECT": "FISHEYE"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "looks_seteffectto",
+            "inputs": {
+                "VALUE": {
+                    "value": "0",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "EFFECT": "WHIRL"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "looks_seteffectto",
+            "inputs": {
+                "VALUE": {
+                    "value": "0",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "EFFECT": "PIXELATE"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "looks_seteffectto",
+            "inputs": {
+                "VALUE": {
+                    "value": "0",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "EFFECT": "BRIGHTNESS"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "looks_seteffectto",
+            "inputs": {
+                "VALUE": {
+                    "value": "0",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "EFFECT": "GHOST"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "looks_gotofrontback",
+            "fields": {
+                "FRONT_BACK": "back"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "looks_goforwardbackwardlayers",
+            "inputs": {
+                "NUM": {
+                    "value": "1",
+                    "type": "Integer"
+                }
+            },
+            "fields": {
+                "FORWARD_BACKWARD": "backward"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "sound_seteffectto",
+            "inputs": {
+                "VALUE": {
+                    "value": "100",
+                    "type": "Number"
+                }
+            },
+            "fields": {
+                "EFFECT": "PAN"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "event_whenkeypressed",
+            "fields": {
+                "KEY_OPTION": "up arrow"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "event_whenkeypressed",
+            "fields": {
+                "KEY_OPTION": "any"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_setdragmode",
+            "fields": {
+                "DRAG_MODE": "not draggable"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_current",
+            "fields": {
+                "CURRENTMENU": "MONTH"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_current",
+            "fields": {
+                "CURRENTMENU": "DATE"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_current",
+            "fields": {
+                "CURRENTMENU": "DAYOFWEEK"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_current",
+            "fields": {
+                "CURRENTMENU": "HOUR"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_current",
+            "fields": {
+                "CURRENTMENU": "MINUTE"
+            }
+        }
+    ],
+    [
+        {
+            "opcode": "sensing_current",
+            "fields": {
+                "CURRENTMENU": "SECOND"
+            }
+        }
+    ]
+]
