@@ -4,7 +4,6 @@ const path  = require('path');
 const fs = require('fs');
 const { program } = require('commander');
 const _chalk = import("chalk").then(m=>m.default);
-const _open = import("open").then(m=>m.default);
 const { FileError, CompileError } = require('./errors');
 
 const app_dir = path.dirname(require.main.filename);
