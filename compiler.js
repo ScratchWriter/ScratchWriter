@@ -22,7 +22,7 @@ const DEFAULT_OPTIONS = {
     extentions: ['sw'],
     mainfiles: ['main', 'index'],
     warp: true,
-}
+};
 
 class CompilerCtx {
     constructor(namespace, import_trace, options = {}) {
@@ -64,6 +64,7 @@ class Compiler {
         this.used_namespaces = new Set(['main']);
         this.global = new Namespace('main');
         this.register_counter = 0;
+        this.proc_cache = {};
         const yy = {
             program,
             compiler: this,
@@ -576,11 +577,7 @@ class Compiler {
 
     // helper for inputs
     inp(x) {
-        if (Array.isArray(x)) {
-            return [1, x];
-        } else {
-            return [2, x];
-        }
+        return this.program.inp(x);
     }
 
     // process input sidechaining and call a macro
@@ -618,10 +615,9 @@ class Compiler {
 
     template_function_define(ctx, identifier, identifiers, gen_blocks, at) {
         let n = 0;
-        const cache = {};
+        const cache = this.proc_cache;
         const scope = ctx.scope;
         const base_id = this.get_unique_name(scope, identifier);
-        const return_register = this.get_register();
 
         const arg_info = (value, name) => {
             if (value.has_expression()) return {
@@ -648,13 +644,15 @@ class Compiler {
 
         const get_proc = (args, at) => {
             const dynamic = args.filter(x=>x.dynamic).length === args.length;
-            const code = args.map(x=>x.id).join(' ');
-            if (code in cache) {
+            const code = base_id + ' ' + args.map(x=>x.id).join(' ');
+            if (cache.hasOwnProperty(code)) {
                 return cache[code];
             }
 
+            const return_register = this.get_register();
             const argnames = args.map(x=>x.name);
             const proc = this.program.def_proc(base_id, argnames, dynamic? '':`#${n++}`, this.options.warp);
+            proc.return_register = return_register;
             cache[code] = proc;
             const subctx = ctx.sub(identifier, {
                 return_register,
@@ -684,6 +682,7 @@ class Compiler {
         scope.define(identifier, this.macro_raw_args(identifiers.map(arg=>Macro.arg(arg)), (yy, call_args, at) => {
             const args = _.zip(identifiers, call_args).map(([name,value])=>arg_info(value, name));
             const proc = get_proc(args, at);
+            const return_register = proc.return_register;
             const argvalues = args.map(x=>x.dynamic ? x.value.expressions_unsafe().id : this.program.string(x.value.identify()));
             if (proc.returns) {
                 const register = this.get_register();
@@ -691,7 +690,7 @@ class Compiler {
                     new Statements(proc.unlinked_call(argvalues)),
                     new Statements(this.program.unlinked_block({
                         opcode: "data_setvariableto",
-                        inputs: {VALUE: [1, return_register.expressions_unsafe().id]},
+                        inputs: {VALUE: [3, return_register.expressions_unsafe().id, [10, ""]]},
                         fields: {VARIABLE: register.unwrap_field().unwrap_unsafe().data},
                     })),
                 );
@@ -853,7 +852,11 @@ class Compiler {
         if (a.void && b.void) return a;
         if (b.void) return a;
         if (a.void) return b;
-        this.program.connect_blocks(a.tail, b.head);
+        const opcode = this.program.blockwriter.opcode(a.tail);
+        const hints = new BlockHints(opcode);
+        if (!hints.is(BLOCKTYPE.CAP)) {
+            this.program.connect_blocks(a.tail, b.head);
+        }
         return new Statements(a.head, b.tail);
     }
 
@@ -888,6 +891,10 @@ class Compiler {
         if (this.yy.debug) {
             console.debug(...args);
         }
+    }
+
+    relink() {
+        this.program.blockwriter.relink();
     }
 }
 

@@ -133,6 +133,11 @@ async function compile(file, options) {
     });
 
     c.file(file.path);
+    c.relink();
+
+    if (options.debug) {
+        console.log(c.program.blockwriter.n, 'blocks');
+    }
 
     return await program.build();
 }

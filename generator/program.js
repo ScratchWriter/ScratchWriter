@@ -311,8 +311,13 @@ class Procedure {
         });
     }
 
+    // helper for inputs
+    inp(x) {
+        return this.program.inp(x);
+    }
+
     write_call(ctx, args) {
-        const inputs = args.map(x=>[1,x]);
+        const inputs = args.map(x=>this.inp(x));
         ctx.next({
             opcode: "procedures_call",
             inputs: Object.fromEntries(_.zip(this.argumentids, inputs)),
@@ -327,7 +332,7 @@ class Procedure {
     }
 
     unlinked_call(args) {
-        const inputs = args.map(x=>[1,x]);
+        const inputs = args.map(x=>this.inp(x));
         return this.program.unlinked_block({
             opcode: "procedures_call",
             inputs: Object.fromEntries(_.zip(this.argumentids, inputs)),
@@ -413,6 +418,10 @@ class Program {
 
     symbol(name) {
         return this.blockwriter.variablemanager.symbol(name);
+    }
+
+    inp(x) {
+        return this.blockwriter.inp(x);
     }
 
     // inject blocks into an existing sb3 file

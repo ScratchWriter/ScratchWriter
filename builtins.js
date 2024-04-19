@@ -8,13 +8,7 @@ const {
     Namespace,
 } = require('./nodes');
 
-function inp(x) {
-    if (Array.isArray(x)) {
-        return [1, x];
-    } else {
-        return [2, x];
-    }
-}
+const { inp } = require('./generator/blockwriter');
 
 const operators = {
     add: (yy, [lhs, rhs]) => yy.compiler.reporter({

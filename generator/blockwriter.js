@@ -12,6 +12,18 @@ const {
     DATA_TYPE_OPCODES
 } = require('../hints');
 
+function inp(x, shadow = [10, ""]) {
+    if (Array.isArray(x)) {
+        if (x[0] === 12 || x[0] == 13) {
+            return [3, x, shadow];
+        } else {
+            return [1, x];
+        }
+    } else {
+        return [3, x, shadow];
+    }
+}
+
 class BlockWriter {
     constructor(blocks = {}) {
         this.blocks = blocks;
@@ -170,6 +182,29 @@ class BlockWriter {
             block_cb(block_id);
         });
     }
+
+    relink() {
+        for (const block_id of Object.keys(this.blocks)) {
+            const block = this.block(block_id);
+            for (const [input_name, arr] of Object.entries(block.inputs)) {
+                let [shadow, input_block_id] = arr;
+                if (!input_block_id) {
+                    delete block.inputs[input_name];
+                } else if (!Array.isArray(input_block_id)) {
+                    const input_block = this.block(input_block_id);
+                    input_block.parent = block_id;
+                }
+            }
+            if (block.next) {
+                const next = this.block(block.next);
+                next.parent = block_id;
+            }
+        }
+    }
+
+    inp(x) {
+        return inp(x);
+    }
 }
 
 class BlockWriterCtx {
@@ -214,4 +249,4 @@ class BlockWriterCtx {
     }
 }
 
-module.exports = {BlockWriter, BlockWriterCtx};
+module.exports = {BlockWriter, BlockWriterCtx, inp};

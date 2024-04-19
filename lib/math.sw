@@ -32,7 +32,7 @@ function clamp(x, min_x, max_x) {
 }
 
 function is_finite(x) {
-    return !(x == INFINITY || x == NEGATIVE_INFINITY || x == NaN);
+    return (1 * x) == x && !(x == INFINITY || x == NEGATIVE_INFINITY);
 }
 
 function pow(base, exponent) {

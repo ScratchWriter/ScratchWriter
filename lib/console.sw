@@ -13,7 +13,16 @@ let font_weight = 1;
 let text_color = color.rgb(255,255,255);
 let background_color = color.rgb(4,16,32);
 
+function configure(linecount) {
+    lines = linecount;
+    let h = window.HEIGHT - (2*padding);
+    line_height = h/lines;
+    font_size = (line_height) / 2;
+    reset();
+}
+
 function reset() {
+    console.reset();
     repeat(lines) {
         console.push("");
     }

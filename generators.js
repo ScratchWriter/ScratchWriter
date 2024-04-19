@@ -178,7 +178,7 @@ module.exports = {
             const set = yy.compiler.stackblock({
                 opcode: "data_setvariableto",
                 inputs: {
-                    VALUE: [1, expression.expressions_unsafe().id]
+                    VALUE: yy.compiler.inp(expression.expressions_unsafe().id),
                 },
                 fields: {
                     VARIABLE: ctx.return_register.unwrap_field().unwrap_unsafe().data,

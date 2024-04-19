@@ -64,6 +64,7 @@ function draw_string(x,y, scale, spacing) {
         n += 1;
     }
     set_costume(preserve_costume);
+    return ix-x;
 }
 
 const CENTER = 0.5;
@@ -75,7 +76,7 @@ const RIGHT = 1;
 function draw(str, x, y, anchor_x, anchor_y, size, spacing) {
     let scale = size/LINE_HEIGHT;
     let width = load_string(str) * scale * spacing;
-    draw_string(x - (width * anchor_x), y - (size * anchor_y), scale, spacing);
+    return draw_string(x - (width * anchor_x), y - (size * anchor_y), scale, spacing);
 }
 
 font.load();

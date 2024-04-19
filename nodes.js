@@ -17,7 +17,7 @@ class ParseNode {
         this.to_namespace = options.to_namespace;
         this.to_macro = options.to_macro;
         this.at = options.at || {anonymous: true};
-        this._uuid = uuidv4();
+        this._uuid = options.uuid || uuidv4();
     }
 
     identify() {
@@ -41,7 +41,10 @@ class ParseNode {
     }
 
     clone_with_location(at) {
-        return new ParseNode(Object.assign({},this.options,{at}));
+        return new ParseNode(Object.assign({},this.options,{
+            at,
+            uuid: this._uuid,
+        }));
     }
 
     unwrap_statements() {
