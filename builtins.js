@@ -77,21 +77,21 @@ const operators = {
     and: (yy, [lhs, rhs]) => yy.compiler.reporter({
         opcode: "operator_and",
         inputs: {
-            OPERAND1: inp(yy.compiler.ensure_boolean_reporter(lhs)),
-            OPERAND2: inp(yy.compiler.ensure_boolean_reporter(rhs)),
+            OPERAND1: yy.compiler.inp_boolean(lhs),
+            OPERAND2: yy.compiler.inp_boolean(rhs),
         },
     }),
     or: (yy, [lhs, rhs]) => yy.compiler.reporter({
         opcode: "operator_or",
         inputs: {
-            OPERAND1: inp(yy.compiler.ensure_boolean_reporter(lhs)),
-            OPERAND2: inp(yy.compiler.ensure_boolean_reporter(rhs)),
+            OPERAND1: yy.compiler.inp_boolean(lhs),
+            OPERAND2: yy.compiler.inp_boolean(rhs),
         },
     }),
     not: (yy, [operand]) => yy.compiler.reporter({
         opcode: "operator_not",
         inputs: {
-            OPERAND: inp(yy.compiler.ensure_boolean_reporter(operand)),
+            OPERAND: yy.compiler.inp_boolean(operand),
         },
     }),
 }

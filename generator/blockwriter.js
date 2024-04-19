@@ -12,15 +12,23 @@ const {
     DATA_TYPE_OPCODES
 } = require('../hints');
 
+function inp_shadow(x, shadow) {
+    if (shadow) {
+        return [3, x, shadow];
+    } else {
+        return [2, x];
+    }
+}
+
 function inp(x, shadow = [10, ""]) {
     if (Array.isArray(x)) {
         if (x[0] === 12 || x[0] == 13) {
-            return [3, x, shadow];
+            return inp_shadow(x, shadow);
         } else {
             return [1, x];
         }
     } else {
-        return [3, x, shadow];
+        return inp_shadow(x, shadow);
     }
 }
 
@@ -202,8 +210,8 @@ class BlockWriter {
         }
     }
 
-    inp(x) {
-        return inp(x);
+    inp(x, shadow) {
+        return inp(x, shadow);
     }
 }
 

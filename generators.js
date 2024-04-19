@@ -28,7 +28,7 @@ module.exports = {
                 opcode: "control_if",
                 inputs: {
                     SUBSTACK: yy.compiler.inp(block.statements_unsafe().head),
-                    CONDITION: yy.compiler.inp(yy.compiler.ensure_boolean_reporter(expression.expressions_unsafe().id)),
+                    CONDITION: yy.compiler.inp_boolean(expression.expressions_unsafe().id),
                 },
             }, at),
             [expression],
@@ -42,7 +42,7 @@ module.exports = {
                 inputs: {
                     SUBSTACK: yy.compiler.inp(ifblock.statements_unsafe().head),
                     SUBSTACK2: yy.compiler.inp(elseblock.statements_unsafe().head),
-                    CONDITION: yy.compiler.inp(yy.compiler.ensure_boolean_reporter(expression.expressions_unsafe().id)),
+                    CONDITION: yy.compiler.inp_boolean(expression.expressions_unsafe().id),
                 }
             }, at),
             [expression],
@@ -68,7 +68,7 @@ module.exports = {
                 opcode: "control_repeat_until",
                 inputs: {
                     SUBSTACK: yy.compiler.inp(block.statements_unsafe().head),
-                    CONDITION: yy.compiler.inp(yy.compiler.ensure_boolean_reporter(expression.expressions_unsafe().id)),
+                    CONDITION: yy.compiler.inp_boolean(expression.expressions_unsafe().id),
                 }
             }, at),
             [expression],
@@ -79,10 +79,8 @@ module.exports = {
         const while_not = yy.compiler.reporter({
             opcode: "operator_not",
             inputs: {
-                OPERAND: yy.compiler.inp(
-                    yy.compiler.ensure_boolean_reporter(
-                        expression.expressions_unsafe().id
-                    ),
+                OPERAND: yy.compiler.inp_boolean(
+                    expression.expressions_unsafe().id
                 ),
             },
         });
@@ -91,7 +89,7 @@ module.exports = {
                 opcode: "control_repeat_until",
                 inputs: {
                     SUBSTACK: yy.compiler.inp(block.statements_unsafe().head),
-                    CONDITION: yy.compiler.inp(yy.compiler.ensure_boolean_reporter(while_not.expressions_unsafe().id)),
+                    CONDITION: yy.compiler.inp_boolean(while_not.expressions_unsafe().id),
                 }
             }, at),
             [expression],

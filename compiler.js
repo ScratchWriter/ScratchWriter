@@ -576,8 +576,12 @@ class Compiler {
     }
 
     // helper for inputs
-    inp(x) {
-        return this.program.inp(x);
+    inp(x, shadow) {
+        return this.program.inp(x, shadow);
+    }
+
+    inp_boolean(x) {
+        return this.inp(this.ensure_boolean_reporter(x), null);
     }
 
     // process input sidechaining and call a macro

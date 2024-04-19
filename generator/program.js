@@ -312,8 +312,8 @@ class Procedure {
     }
 
     // helper for inputs
-    inp(x) {
-        return this.program.inp(x);
+    inp(x, shadow) {
+        return this.program.inp(x, shadow);
     }
 
     write_call(ctx, args) {
@@ -420,8 +420,8 @@ class Program {
         return this.blockwriter.variablemanager.symbol(name);
     }
 
-    inp(x) {
-        return this.blockwriter.inp(x);
+    inp(x, shadow) {
+        return this.blockwriter.inp(x, shadow);
     }
 
     // inject blocks into an existing sb3 file

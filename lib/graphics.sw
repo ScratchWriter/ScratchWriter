@@ -204,3 +204,88 @@ function fill_triangle(ax, ay, bx, by, cx, cy, res) {
     goto(ax, ay);
     pen_up();
 }
+
+let reg1x; let reg1y;
+let reg2x; let reg2y;
+
+function swap() {
+    let tx1 = reg1x;
+    let tx2 = reg2x;
+    reg1x = reg1y;
+    reg2x = reg2y;
+    reg1y = tx1;
+    reg2y = tx2;
+}
+
+function clipto(threshold, side) {
+    let dx = reg2x-reg1x;
+    let dy = reg2y-reg1y;
+    let m = dx/dy;
+    let b = reg1x-(m*reg1y);
+
+    let out = 0;
+    const V1 = 1;
+    const V2 = 10;
+
+    if (side*(reg1y-threshold)>0) {
+        out += V1;
+    }
+
+    if (side*(reg2y-threshold)>0) {
+        out += V2;
+    }
+
+    if (out == 11) {
+        return 0;
+    }
+
+    if (out == 0) {
+        return 1;
+    }
+
+    if (out == V1) {
+        reg1x = m*threshold+b;
+        reg1y = threshold;
+        return 1;
+    }
+    
+    if (out == V2) {
+        reg2x = m*threshold+b;
+        reg2y = threshold;
+        return 1;
+    }
+
+    return 0;
+}
+
+function line_clipped(x1,y1,x2,y2, size) {
+    let r = size/2;
+    reg1x = x1;
+    reg1y = y1;
+    reg2x = x2;
+    reg2y = y2;
+
+    if (clipto(window.MAX_Y+r, 1) == 0) {
+        return;
+    }
+    if (clipto(window.MIN_Y-r, -1) == 0) {
+        return;
+    }
+
+    swap();
+
+    if (clipto(window.MAX_X+r, 1) == 0) {
+        return;
+    }
+    if (clipto(window.MIN_X-r, -1) == 0) {
+        return;
+    }
+
+    swap();
+
+    pen_up();
+    set_pen_size(size);
+    goto(reg1x, reg1y);
+    pen_down();
+    goto(reg2x, reg2y);
+}
