@@ -2,6 +2,13 @@ function split(str, delim, into) {
     let buff = "";
     let n = 0;
 
+    if (delim == "") {
+        repeat (len(str)) {
+            into.push(letterof(n, str));
+            n += 1;
+        }
+    }
+
     repeat (len(str)) {
         let c = letterof(n, str);
         if (c == delim) {
@@ -55,4 +62,32 @@ function pad_center(str, size, char) {
             return buff;
         }
     }
+}
+
+function substring(str, start, end) {
+    let buff = "";
+    let i = start % len(str);
+    repeat((end % len(str)) - i) {
+        buff = buff # letterof(i, str);
+    }
+    return buff;
+}
+
+function insert(base_str, at, str) {
+    return 
+        substring(base_str, 0, at) #
+        str #
+        substring(base_str, at, -1)
+        ;
+}
+
+function replace_char(str, at, with) {
+    if (at > len(str)) {
+        return str # with;
+    }
+    return
+        substring(str, 0, at) #
+        with #
+        substring(str, at + 1, -1)
+        ;
 }

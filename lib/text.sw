@@ -78,5 +78,3 @@ function draw(str, x, y, anchor_x, anchor_y, size, spacing) {
     let width = load_string(str) * scale * spacing;
     return draw_string(x - (width * anchor_x), y - (size * anchor_y), scale, spacing);
 }
-
-font.load();

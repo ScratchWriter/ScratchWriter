@@ -148,7 +148,7 @@ class Compiler {
         try {
             const deffered = parser.parse(data);
             const head = deffered(ctx);
-            this.main(head);
+            this.main(this.module_wrap("import " + module_scope.id, head));
         } catch (err) {
             err.import_stack = [...err.import_stack??[], file];
             throw err;
@@ -655,7 +655,7 @@ class Compiler {
 
             const return_register = this.get_register();
             const argnames = args.map(x=>x.name);
-            const proc = this.program.def_proc(base_id, argnames, dynamic? '':`#${n++}`, this.options.warp);
+            const proc = this.program.def_proc(base_id, argnames, dynamic? '':`#${n++}`, false);
             proc.return_register = return_register;
             cache[code] = proc;
             const subctx = ctx.sub(identifier, {
@@ -676,8 +676,7 @@ class Compiler {
             return_register.return_counter = 0;
             const blocks = gen_blocks(subctx).statements_unsafe().head;
             if (blocks) {
-                const ctx = proc.getContext();
-                ctx.connect_next(blocks);
+                proc.getContext().connect_next(blocks);
             }
             proc.returns = return_register.return_counter > 0;
             return proc;
@@ -710,6 +709,24 @@ class Compiler {
                 });
             }
         }), at);
+    }
+
+    no_refresh_block(ctx, gen_blocks, at) {
+        const proc = this.program.def_proc(`no_refresh_${this.register_counter++}`, [], "", true);
+        const blocks = gen_blocks(ctx).statements_unsafe().head;
+        if (blocks) {
+            proc.getContext().connect_next(blocks);
+        }
+        return this.statement(proc.unlinked_call([]), at);
+    }
+
+    module_wrap(name, block, at) {
+        const proc = this.program.def_proc(name, [], "", false);
+        const blocks = block.statements_unsafe().head;
+        if (blocks) {
+            proc.getContext().connect_next(blocks);
+        }
+        return this.statement(proc.unlinked_call([]), at);
     }
 
     // get a variable for generated code that isn't associated with a variable

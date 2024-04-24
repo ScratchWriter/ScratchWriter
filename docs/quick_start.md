@@ -37,21 +37,20 @@ We will need to use some built-in modules. Copy and Paste this code into your "h
 import "text" as text;
 import "color" as color;
 import "graphics" as graphics;
+import "window" as window;
 ```
-Next, let's create a function to draw a frame and call it in a loop.
+Next, let's create a function "frame" and tell scratch we want to use it to draw frames with the pen.
 ```js
-function frame() {
+function frame(delta_time, events) {
     // do stuff
 }
 
-while(true) {
-    frame();
-}
+window.start(frame);
 ```
 
 We can update the frame() function to clear the screen with a solid color and draw the text "Hello World".
 ```js
-function frame() {
+function frame(delta_time, events) {
     // clear the screen
     graphics.fill_rgb(2,8,16);
 
@@ -70,8 +69,9 @@ You `hello_world.sw` file should now look like this.
 import "text" as text;
 import "color" as color;
 import "graphics" as graphics;
+import "window" as window;
 
-function frame() {
+function frame(delta_time, events) {
     // clear the screen
     graphics.fill_rgb(2,8,16);
 
@@ -83,9 +83,7 @@ function frame() {
     text.draw("Hello Scratch", x, y, text.CENTER, text.CENTER, 24, 1);
 }
 
-while(true) {
-    frame();
-}
+window.start(frame);
 ```
 Open the HTML or SB3 file to see the program.
 ![Hello World Program Player](./examples/hello_scratch_player.gif)

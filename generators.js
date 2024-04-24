@@ -105,6 +105,10 @@ module.exports = {
         }, at);
     },
 
+    no_refresh_block(yy, ctx, at, gen_block) {
+        return yy.compiler.no_refresh_block(ctx, gen_block, at);
+    },
+
     import_statement(yy, at, scope, str, identifier) {
         yy.compiler.import(scope, str, identifier);
         return yy.compiler.voidblock(at);

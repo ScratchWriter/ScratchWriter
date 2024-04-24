@@ -14,6 +14,9 @@
 "=="                            return '==';
 ">"                             return '>';
 "<"                             return '<';
+"!="                            return '!=';
+'>='                            return '>=';
+'<='                            return '<='
 "&&"                            return '&&';
 "||"                            return '||';
 "!"                             return '!';
@@ -48,6 +51,7 @@
 "stop"                          return 'STOP';
 "void"                          return 'VOID';
 "function"                      return 'FUNCTION';
+"no_refresh"                    return 'NO_REFRESH';
 "return"                        return 'RETURN';
 "true"                          return 'TRUE';
 "false"                         return 'FALSE';
@@ -61,7 +65,7 @@
 /* operator associations and precedence */
 %left '||'
 %left '&&'
-%left '==' '<' '>'
+%left '==' '<' '>' '!=' '>=' '<='
 %left '#'
 %left '+' '-'
 %left '*' '/'
@@ -143,6 +147,13 @@ statement
             {
                 const yyat = @$;
                 $$ = (ctx) => yy.generators.forever_statement(yy, ctx.at(yyat), $block(ctx));
+            }
+        }
+    | NO_REFRESH block
+        {
+            {
+                const yyat = @$;
+                $$ = (ctx) => yy.generators.no_refresh_block(yy, ctx, ctx.at(yyat), $block);
             }
         }
     | IMPORT string_literal AS IDENTIFIER ';'
@@ -358,6 +369,18 @@ e
                     yy,
                     ctx.at(yyat),
                     yy.compiler.operators.eq,
+                    [$e1(ctx), $e2(ctx)]
+                );
+            }
+        }
+    | e '!=' e
+        {
+            {
+                const yyat = @$;
+                $$ = (ctx) => yy.generators.use_macro(
+                    yy,
+                    ctx.at(yyat),
+                    yy.compiler.operators.neq,
                     [$e1(ctx), $e2(ctx)]
                 );
             }

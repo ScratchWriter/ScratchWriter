@@ -119,6 +119,7 @@ const registry = {
         'literal_angle',
         'literal_color',
         'literal_string',
+        'argument_reporter_string_number',
 
         'event_broadcast',
     ],

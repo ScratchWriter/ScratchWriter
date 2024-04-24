@@ -52,7 +52,6 @@ async function load_manifest(file, options) {
         }
         if (obj['turbowarp-hd-pen']) result.turbowarpHdPen = true;
         if (obj['turbowarp-fps']) result.turbowarpFps = obj['turbowarp-fps'];
-        if (obj['disable-warp']) result.disableWarp = obj['disable-warp'];
         return result;
     }
 

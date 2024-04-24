@@ -1,24 +1,16 @@
+import "string" as string;
+
 import "assets/ABCDEFGHIJKLMNOPQRSTUVWXYZ.svg" as detector;
 import "assets/no_image.svg" as base;
 import "list" as list;
 
-let caps;
-let size;
+let caps = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+let lower = "abcdefghijklmnopqrstuvwxyz";
+let size = len(caps);
 const letters_caps = [];
+string.split(caps, "", letters_caps);
 const letters_lower = [];
-function load() {
-    caps = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    size = len(caps);
-    list.copy(
-        ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
-        letters_caps
-    );
-    list.copy(
-        ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
-        letters_lower
-    );
-}
-load();
+string.split(lower, "", letters_lower);
 
 function is_caps_fast(char) {
     if (!str_contains(caps, char)) {

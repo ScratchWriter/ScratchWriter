@@ -2,11 +2,10 @@ import "list" as list;
 import "string" as string;
 
 const data = [];
-const indices = [];
+const indices = [%indices];
 let caps_offset = 26;
 
 function load() {
-    const load_indices = [%indices];
     const parts = [
 %fontdata
     ];
@@ -18,8 +17,6 @@ function load() {
         string.split(parts.item(n), ",", data);
         n += 1;
     }
-    list.copy(load_indices, indices);
-
     parts.reset();
-    load_indices.reset();
 }
+load();

@@ -60,6 +60,18 @@ const operators = {
             OPERAND2: inp(rhs),
         },
     }),
+    neq: (yy, [lhs, rhs]) => yy.compiler.reporter({
+        opcode: "operator_not",
+        inputs: {
+            OPERAND: yy.compiler.inp_boolean(yy.compiler.program.unlinked_reporter({
+                opcode: "operator_equals",
+                inputs: {
+                    OPERAND1: inp(lhs),
+                    OPERAND2: inp(rhs),
+                },
+            })),
+        },
+    }),
     gt: (yy, [lhs, rhs]) => yy.compiler.reporter({
         opcode: "operator_gt",
         inputs: {
@@ -383,6 +395,16 @@ function builtins(yy) {
             opcode: "control_wait",
             inputs: {
                 DURATION: inp(duration),
+            }
+        })
+    ));
+
+    yy.compiler.global.define('wait_until', yy.compiler.macro(
+        [Macro.arg('condition')],
+        (yy, [condition]) => yy.compiler.stackblock({
+            opcode: "control_wait_until",
+            inputs: {
+                CONDITION: yy.compiler.inp_boolean(condition),
             }
         })
     ));
