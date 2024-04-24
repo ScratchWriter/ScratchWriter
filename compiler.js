@@ -608,7 +608,7 @@ class Compiler {
             throw new CompileError(`${accessor.identifier} is not callable`, at);
         }
         if (value.argument_count !== args.length) {
-            throw new CompileError(`Incorrect number of arguments for call to ${accessor.identifier}`, at);
+            throw new CompileError(`Incorrect number of arguments for call to ${accessor.identifier}(${value.argument_info.map(x=>x.name).join(', ')})`, at);
         }
         if (value.raw_args) {
             return this.use_macro_raw(value.generate_blocks, args, at);
