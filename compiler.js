@@ -658,7 +658,7 @@ class Compiler {
             const proc = this.program.def_proc(base_id, argnames, dynamic? '':`#${n++}`, false);
             proc.return_register = return_register;
             cache[code] = proc;
-            const subctx = ctx.sub(identifier, {
+            const subctx = ctx.sub(`${identifier}#${n++}`, {
                 return_register,
             });
 

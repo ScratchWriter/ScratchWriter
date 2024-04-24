@@ -68,9 +68,11 @@ function update() {
         }
     }
     mouse_last = get_mouse_down();
-
-    events.mouse_delta_x = get_mouse_x() - mouse_last_x;
-    events.mouse_delta_y = get_mouse_y() - mouse_last_y;
+    
+    events.mouse_x = get_mouse_x();
+    events.mouse_y = get_mouse_y();
+    events.mouse_delta_x = events.mouse_x - mouse_last_x;
+    events.mouse_delta_y = events.mouse_y - mouse_last_y;
     mouse_last_x = get_mouse_x();
     mouse_last_y = get_mouse_y();
 }

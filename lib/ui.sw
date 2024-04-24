@@ -1,7 +1,7 @@
 import "text" as text;
 import "window" as window;
 
-function button(str, x,y, anchor_x, anchor_y, font_size, spacing, text_color, hover_color) {
+function button(str, x,y, anchor_x, anchor_y, font_size, spacing, text_color, hover_color, events) {
     let scale = font_size/text.LINE_HEIGHT;
     let width = text.load_string(str) * scale * spacing;
 
@@ -25,17 +25,12 @@ function button(str, x,y, anchor_x, anchor_y, font_size, spacing, text_color, ho
         set_pen_color(text_color);
     }
 
-    if (hover && get_mouse_down()) {
+    if (hover && events.mouse_pressed) {
         click = true;
     } else {
         click = false;
     }
 
     text.draw_string(left, bottom, scale, spacing);
-
-    if (click) {
-        wait_until(!get_mouse_down());
-    }
-
     return click;
 }
