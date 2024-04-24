@@ -87,6 +87,25 @@ class BlockWriter {
         return id;
     }
 
+    replace_input(id, data) {
+        if (Array.isArray(data)) {
+            const block = this.block(id);
+            if (block.parent) {
+                const parent = this.block(block.parent);
+                for (const input of Object.entries(parent.inputs)) {
+                    const [key, arr] = input;
+                    if (arr[1] === id) {
+                        parent.inputs[key] = inp(data);
+                    }
+                }
+            }
+            this.delete_block(id);
+        } else if (typeof data === 'string') {
+            this.blocks[id] = this.block(data);
+            this.delete_block(data);
+        }
+    }
+
     unlinked(options = {}) {
         const id = this.next_id();
         this.create(id, options);

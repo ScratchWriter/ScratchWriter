@@ -52,6 +52,7 @@ async function load_manifest(file, options) {
         }
         if (obj['turbowarp-hd-pen']) result.turbowarpHdPen = true;
         if (obj['turbowarp-fps']) result.turbowarpFps = obj['turbowarp-fps'];
+        if (obj['skip-optimization']) result.skipOptimization = true;
         return result;
     }
 
@@ -133,6 +134,10 @@ async function compile(file, options) {
 
     c.file(file.path);
     c.relink();
+    if (!options.skipOptimization) {
+        c.program.optimize();
+        c.relink();
+    }
 
     if (options.debug) {
         console.log(c.program.blockwriter.n, 'blocks');
@@ -244,9 +249,9 @@ async function build(file, options) {
         const sb3 = await to_sb3(file, options);
         console.log('building to targets:');
         if (options.targetSb3) await target_sb3(file, sb3, options);
-        if (options.targetHtml) await target_html(file, sb3, options);
         if (options.targetSb3Json) await target_sb3_json(file, sb3, options);
         if (options.targetBlocks) await target_blocks(file, sb3, options);
+        if (options.targetHtml) await target_html(file, sb3, options);
     }, options.debug);
 }
 
@@ -268,6 +273,7 @@ program.command('build')
     .option('--clean', 'clean the out-directory before building', false)
     .option('--turbowarp-fps <number>')
     .option('--turbowarp-hd-pen')
+    .option('--skip-optimization')
     .option('--debug', undefined, false)
     .action((infile, options) => {
         catch_compiler_errors(async () => {
@@ -290,6 +296,7 @@ program.command('watch')
     .option('--clean', 'clean the out-directory before building', false)
     .option('--turbowarp-fps <number>')
     .option('--turbowarp-hd-pen')
+    .option('--skip-optimization')
     .option('--debug', undefined, false)
     .action(async (infile, options) => {
         const chalk = await _chalk;

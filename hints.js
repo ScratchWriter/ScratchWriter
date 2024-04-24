@@ -5,6 +5,7 @@ const BLOCKTYPE = {
     BOOLEAN: 'BOOLEAN',
     C: 'C',
     CAP: 'CAP',
+    LITERAL: 'LITERAL',
 }
 
 const DATA_TYPE_OPCODES = {
@@ -30,6 +31,7 @@ const CATEGORY = {
     VARIABLE: 'VARIABLE',
     LIST: 'LIST',
     PROCEDURES: 'PROCEDURES',
+    BINOP: 'BINOP',
 }
 
 const registry = {
@@ -196,6 +198,27 @@ const registry = {
         'pen_setPenColorParamTo',
         'pen_changePenSizeBy',
         'pen_setPenSizeTo',
+    ],
+    [BLOCKTYPE.LITERAL]: [
+        'literal_number',
+        'literal_positive_number',
+        'literal_positive_integer',
+        'literal_integer',
+        'literal_angle',
+        'literal_string',
+    ],
+    [CATEGORY.BINOP]: [
+        'operator_add',
+        'operator_subtract',
+        'operator_multiply',
+        'operator_divide',
+        'operator_mod',
+        'operator_gt',
+        'operator_lt',
+        'operator_equals',
+        'operator_and',
+        'operator_or',
+        'operator_join',
     ],
 }
 

@@ -6,6 +6,7 @@ const {
     BlockWriter,
     BlockWriterCtx,
 } = require('./blockwriter.js');
+const { BLOCKTYPE, BlockHints, CATEGORY } = require('../hints');
 
 const { injectBlocks, base_project_path, saveFile, loadFile, locateTarget } = require('./sb3.js');
 
@@ -422,6 +423,118 @@ class Program {
 
     inp(x, shadow) {
         return this.blockwriter.inp(x, shadow);
+    }
+
+    hints(block_id) {
+        const opcode = this.blockwriter.opcode(block_id);
+        return new BlockHints(opcode);
+    }
+
+    binop_inputs(block_id) {
+        const block = this.blockwriter.block(block_id);
+        const arg1 = (block.inputs.NUM1 || block.inputs.STRING1 || block.inputs.OPERAND1)[1];
+        const arg2 = (block.inputs.NUM2 || block.inputs.STRING2 || block.inputs.OPERAND2)[1];
+        return [arg1, arg2];
+    }
+
+    optimize_block(block_id) {
+        const block = this.blockwriter.block(block_id);
+        const opcode = this.blockwriter.opcode(block_id);
+        const hints = this.hints(block_id);
+        if (hints.is(CATEGORY.BINOP)) {
+            const [arg1, arg2] = this.binop_inputs(block_id);
+            const hints1 = this.hints(arg1);
+            const literal1 = hints1.is(BLOCKTYPE.LITERAL);
+            const hints2 = this.hints(arg2);
+            const literal2 = hints2.is(BLOCKTYPE.LITERAL);
+
+            // literal operations
+            if (literal1 && literal2) {
+                const value1 = arg1[1];
+                const value2 = arg2[1];
+                if (opcode === 'operator_add') {
+                    this.blockwriter.replace_input(block_id, this.number(value1 + value2));
+                    return true;
+                }
+                if (opcode === 'operator_subtract') {
+                    this.blockwriter.replace_input(block_id, this.number(value1 - value2));
+                    return true;
+                }
+                if (opcode === 'operator_multiply') {
+                    this.blockwriter.replace_input(block_id, this.number(value1 * value2));
+                    return true;
+                }
+                if (opcode === 'operator_divide') {
+                    this.blockwriter.replace_input(block_id, this.number(value1 / value2));
+                    return true;
+                }
+                if (opcode === 'operator_join') {
+                    this.blockwriter.replace_input(block_id, this.string(String(value1) + String(value2)));
+                    return true;
+                }
+            }
+
+            if (literal1 || literal2) {
+                let value;
+                let literal;
+                if (literal1) {
+                    literal = arg1[1];
+                    value = arg2;
+                } else {
+                    literal = arg2[1];
+                    value = arg1;
+                }
+
+                // identiy operations
+                if (opcode === 'operator_add' && literal === 0) {
+                    this.blockwriter.replace_input(block_id, value);
+                    return true;
+                }
+                if (opcode === 'operator_subtract' && arg2[1] === 0) {
+                    this.blockwriter.replace_input(block_id, value);
+                    return true;
+                }
+                if (opcode === 'operator_divide' && arg2[1] === 1) {
+                    this.blockwriter.replace_input(block_id, value);
+                    return true;
+                }
+
+                // nested add opperations
+                const inner_opcode = this.blockwriter.opcode(value);
+                if (opcode === 'operator_add' && inner_opcode === "operator_add") {
+                    const [inner_arg1, inner_arg2] = this.binop_inputs(value);
+                    const inner_hints1 = this.hints(inner_arg1);
+                    const inner_literal1 = inner_hints1.is(BLOCKTYPE.LITERAL);
+                    const inner_hints2 = this.hints(inner_arg2);
+                    const inner_literal2 = inner_hints2.is(BLOCKTYPE.LITERAL);
+
+                    let result_literal;
+                    let result_value;
+                    if (inner_literal1 && inner_literal2) {
+                    } else if (inner_literal1) {
+                        result_literal = literal + inner_arg1[1];
+                        result_value = inner_arg2;
+                    } else if (inner_literal2) {
+                        result_literal = literal + inner_arg2[1];
+                        result_value = inner_arg1;
+                    }
+                    if (result_literal && result_value) {
+                        block.inputs.NUM1 = this.inp(result_value);
+                        block.inputs.NUM2 = this.inp(this.number(result_literal));
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    optimize() {
+        for (const block of Object.keys(this.blockwriter.blocks)) {
+            if (this.optimize_block(block)) {
+                return this.optimize();
+            }
+        }
     }
 
     // inject blocks into an existing sb3 file
