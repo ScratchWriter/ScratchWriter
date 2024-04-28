@@ -60,5 +60,8 @@ function overlay() {
 
 function log(str) {
     write(str);
-    draw();
+
+    no_refresh {
+        draw();
+    }
 }

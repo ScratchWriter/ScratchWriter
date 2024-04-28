@@ -35,6 +35,10 @@ function is_finite(x) {
     return (1 * x) == x && !(x == INFINITY || x == NEGATIVE_INFINITY);
 }
 
+function is_number(x) {
+    return ((1 * x) == x);
+}
+
 function pow(base, exponent) {
     return pow_e(exponent * ln(base));
 }

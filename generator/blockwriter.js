@@ -92,6 +92,7 @@ class BlockWriter {
             const block = this.block(id);
             if (block.parent) {
                 const parent = this.block(block.parent);
+                block.parent = null;
                 for (const input of Object.entries(parent.inputs)) {
                     const [key, arr] = input;
                     if (arr[1] === id) {

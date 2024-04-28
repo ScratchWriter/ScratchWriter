@@ -32,6 +32,11 @@ function grow(list, size, zero) {
     }
 }
 
+function set_safe(list, index, value) {
+    grow(list, index, "");
+    list[index] = value;
+}
+
 function pop(list) {
     if (list.length() < 1) {
         return false;
@@ -50,6 +55,43 @@ function shift(list) {
     return tmp;
 }
 
-function to_string(list) {
-    return "[" # join(list, ", ") # "]";
+function top(list) {
+    return list[list.length()-1];
+}
+
+function set_top(list, value) {
+    list[list.length()-1] = value;
+}
+
+function to_string(from) {
+    if (from.length() == 0) {
+        return "[]";
+    }
+
+    function item(n) {
+        let x = from.item(n);
+        if ((1*x) != x) {
+            x = "\"" # x # "\"";
+        }
+        return x;
+    }
+
+    let buff = item(0);
+    if (from.length() == 1) {
+        return "[" # buff # "]";
+    }
+    let n = 1;
+    repeat(from.length()-1) {
+        buff = buff # "," # item(n);
+        n += 1;
+    }
+    return "[" # buff # "]";
+}
+
+function for_each(list, callback) {
+    let i = 0;
+    repeat(list.length()) {
+        callback(list[i]);
+        i += 1;
+    }
 }

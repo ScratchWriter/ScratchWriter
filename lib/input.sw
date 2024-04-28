@@ -45,7 +45,7 @@ function update() {
             events.keys_down.push(key);
             keys_last[i] = true;
         } else {
-            if (!keys_last[i]) {
+            if (keys_last[i]) {
                 events.keys_released.push(key);
             }
             keys_last[i] = false;
@@ -53,6 +53,7 @@ function update() {
         i += 1;
     }
 
+    events.click = false;
     events.mouse_down = false;
     events.mouse_pressed = false;
     events.mouse_released = false;
@@ -61,6 +62,7 @@ function update() {
         events.mouse_down = true;
         if (!mouse_last) {
             events.mouse_pressed = true;
+            events.click = true;
         }
     } else {
         if (mouse_last) {

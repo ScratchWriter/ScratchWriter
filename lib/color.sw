@@ -30,3 +30,5 @@ const CYAN = 65408;
 const LIGHT_BLUE = 33023;
 const LIGHT_RED = 16711808;
 const LIGHT_GREEN = 8454016;
+
+const DARK_GREEN = 51264;

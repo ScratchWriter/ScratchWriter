@@ -25,8 +25,9 @@ function button(str, x,y, anchor_x, anchor_y, font_size, spacing, text_color, ho
         set_pen_color(text_color);
     }
 
-    if (hover && events.mouse_pressed) {
+    if (hover && events.click) {
         click = true;
+        events.consume_click();
     } else {
         click = false;
     }

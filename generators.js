@@ -27,7 +27,7 @@ module.exports = {
             yy.compiler.stackblock({
                 opcode: "control_if",
                 inputs: {
-                    SUBSTACK: yy.compiler.inp(block.statements_unsafe().head),
+                    SUBSTACK: [2, block.statements_unsafe().head],
                     CONDITION: yy.compiler.inp_boolean(expression.expressions_unsafe().id),
                 },
             }, at),
@@ -40,8 +40,8 @@ module.exports = {
             $$ = yy.compiler.stackblock({
                 opcode: "control_if_else",
                 inputs: {
-                    SUBSTACK: yy.compiler.inp(ifblock.statements_unsafe().head),
-                    SUBSTACK2: yy.compiler.inp(elseblock.statements_unsafe().head),
+                    SUBSTACK: [2, ifblock.statements_unsafe().head],
+                    SUBSTACK2: [2, elseblock.statements_unsafe().head],
                     CONDITION: yy.compiler.inp_boolean(expression.expressions_unsafe().id),
                 }
             }, at),
@@ -54,7 +54,7 @@ module.exports = {
             yy.compiler.stackblock({
                 opcode: "control_repeat",
                 inputs: {
-                    SUBSTACK: yy.compiler.inp(block.statements_unsafe().head),
+                    SUBSTACK: [2, block.statements_unsafe().head],
                     TIMES: yy.compiler.inp(expression.expressions_unsafe().id),
                 }
             }, at),
@@ -67,7 +67,7 @@ module.exports = {
             yy.compiler.stackblock({
                 opcode: "control_repeat_until",
                 inputs: {
-                    SUBSTACK: yy.compiler.inp(block.statements_unsafe().head),
+                    SUBSTACK: [2, block.statements_unsafe().head],
                     CONDITION: yy.compiler.inp_boolean(expression.expressions_unsafe().id),
                 }
             }, at),
@@ -88,7 +88,7 @@ module.exports = {
             yy.compiler.stackblock({
                 opcode: "control_repeat_until",
                 inputs: {
-                    SUBSTACK: yy.compiler.inp(block.statements_unsafe().head),
+                    SUBSTACK: [2, block.statements_unsafe().head],
                     CONDITION: yy.compiler.inp_boolean(while_not.expressions_unsafe().id),
                 }
             }, at),
@@ -100,7 +100,7 @@ module.exports = {
         return yy.compiler.stackblock({
             opcode: "control_forever",
             inputs: {
-                SUBSTACK: yy.compiler.inp(block.statements_unsafe().head),
+                SUBSTACK: [2, block.statements_unsafe().head],
             }
         }, at);
     },
@@ -116,6 +116,26 @@ module.exports = {
 
     const_statement(yy, at, scope, identifier, value) {
         scope.define(identifier, yy.compiler.expression(value.expressions_unsafe().id, at), at);
+        return yy.compiler.voidblock(at);
+    },
+
+    enum_statement(yy, at, ctx, identifier, properties) {
+        let n = 0;
+        const subctx = ctx.sub(identifier);
+        for (const prop of properties) {
+            if (prop.value) {
+                subctx.scope.define(prop.identifier, yy.compiler.expression(
+                    prop.value.expressions_unsafe().id,
+                    at,
+                ), at);
+            } else {
+                subctx.scope.define(prop.identifier, yy.compiler.expression(
+                    yy.generators.expression(yy, at, yy.program.number(n++)).expressions_unsafe().id,
+                    at,
+                ), at);
+            }
+        }
+        ctx.scope.define(identifier, yy.compiler.node(subctx.scope));
         return yy.compiler.voidblock(at);
     },
 
@@ -168,6 +188,10 @@ module.exports = {
     function_declaration_statement(yy, at, ctx, identifier, identifier_list, gen_block) {
         yy.compiler.template_function_define(ctx, identifier, identifier_list, gen_block, at);
         return yy.compiler.voidblock(at);
+    },
+
+    anonymous_function(yy, at, ctx, identifier_list, gen_block) {
+        return yy.compiler.template_function_define(ctx, null, identifier_list, gen_block, at);
     },
 
     return_value(yy, at, ctx, expression) {

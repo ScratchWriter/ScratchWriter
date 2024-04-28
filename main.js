@@ -136,7 +136,6 @@ async function compile(file, options) {
     c.relink();
     if (!options.skipOptimization) {
         c.program.optimize();
-        c.relink();
     }
 
     if (options.debug) {

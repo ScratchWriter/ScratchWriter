@@ -141,20 +141,32 @@ class ParseNode {
 class Namespace {
     constructor(id, up) {
         this.symbols = new Map();
+        this.private_symbols = new Map();
         this.up = up;
         this.id = id;
         this.namespace = true;
     }
 
-    define(identifier, value, at) {
-        if (this.symbols.has(identifier)) throw new CompileError(`${identifier} already exists`, at);
-        this.symbols.set(identifier, value);
+    define(identifier, value, at, is_private = false) {
+        if (this.symbols.has(identifier) || this.private_symbols.has(identifier)) throw new CompileError(`${identifier} already exists`, at);
+        if (is_private) {
+            this.private_symbols.set(identifier, value);
+        } else {
+            this.symbols.set(identifier, value);
+        }
     }
 
-    lookup(identifier) {
+    lookup_external(identifier) {
         let r = this.symbols.get(identifier);
         if (r) return r;
         if (this.up) return this.up.lookup(identifier);
+        return undefined;
+    }
+
+    lookup(identifier) {
+        let r = this.symbols.get(identifier) || this.private_symbols.get(identifier);
+        if (r) return r;
+        if (this.up) return this.up.lookup_external(identifier);
         return undefined;
     }
 

@@ -148,7 +148,7 @@ class Compiler {
         try {
             const deffered = parser.parse(data);
             const head = deffered(ctx);
-            this.main(this.module_wrap("import " + module_scope.id, head));
+            this.main(this.module_wrap("module " + module_scope.id, head));
         } catch (err) {
             err.import_stack = [...err.import_stack??[], file];
             throw err;
@@ -260,7 +260,9 @@ class Compiler {
     import(scope, inpfile, as_symbol) {
         this.debug('importing', inpfile, 'from', this.yy.file);
         const resolved_path = this.load_import(inpfile);
-        this.link(scope, resolved_path, as_symbol);
+        if (as_symbol) {
+            this.link(scope, resolved_path, as_symbol);
+        }
     }
 
     // link a module to the current scope
@@ -621,7 +623,7 @@ class Compiler {
         let n = 0;
         const cache = this.proc_cache;
         const scope = ctx.scope;
-        const base_id = this.get_unique_name(scope, identifier);
+        const base_id = identifier? this.get_unique_name(scope, identifier) : 'anonymous';
 
         const arg_info = (value, name) => {
             if (value.has_expression()) return {
@@ -659,7 +661,7 @@ class Compiler {
             const proc = this.program.def_proc(base_id, argnames, suffix, false);
             proc.return_register = return_register;
             cache[code] = proc;
-            const subctx = ctx.sub(identifier + suffix, {
+            const subctx = ctx.sub((identifier) + suffix, {
                 return_register,
             });
 
@@ -668,7 +670,7 @@ class Compiler {
                     subctx.scope.define(arg.name, new ParseNode({
                         yy: this.yy,
                         to_expression: () => new Expression(proc.argument(arg.name)),
-                    }), at);
+                    }), at, true);
                 } else {
                     subctx.scope.define(arg.name, arg.value, at);
                 }
@@ -683,7 +685,7 @@ class Compiler {
             return proc;
         }
 
-        scope.define(identifier, this.macro_raw_args(identifiers.map(arg=>Macro.arg(arg)), (yy, call_args, at) => {
+        let macro = this.macro_raw_args(identifiers.map(arg=>Macro.arg(arg)), (yy, call_args, at) => {
             const args = _.zip(identifiers, call_args).map(([name,value])=>arg_info(value, name));
             const proc = get_proc(args, at);
             const return_register = proc.return_register;
@@ -709,7 +711,11 @@ class Compiler {
                     },
                 });
             }
-        }), at);
+        });
+
+        scope.define(identifier, macro, at);
+
+        return macro;
     }
 
     no_refresh_block(ctx, gen_blocks, at) {

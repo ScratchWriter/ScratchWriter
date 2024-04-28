@@ -67,27 +67,39 @@ function pad_center(str, size, char) {
 function substring(str, start, end) {
     let buff = "";
     let i = start % len(str);
-    repeat((end % len(str)) - i) {
+    repeat((end % len(str)) - i + 1) {
         buff = buff # letterof(i, str);
+        i += 1;
     }
     return buff;
 }
 
 function insert(base_str, at, str) {
-    return 
-        substring(base_str, 0, at) #
-        str #
-        substring(base_str, at, -1)
-        ;
+    let buff = "";
+    let i = 0;
+    repeat(len(base_str)) {
+        if (i == at) {
+            buff = buff # str;
+        }
+        buff = buff # letterof(i, base_str);
+        i += 1;
+    }
+    return buff;
 }
 
-function replace_char(str, at, with) {
-    if (at > len(str)) {
-        return str # with;
+function replace_char(base_str, at, str) {
+    if (at > len(base_str)) {
+        return base_str # str;
     }
-    return
-        substring(str, 0, at) #
-        with #
-        substring(str, at + 1, -1)
-        ;
+    let buff = "";
+    let i = 0;
+    repeat(len(base_str)) {
+        if (i == at) {
+            buff = buff # str;
+        } else {
+            buff = buff # letterof(i, base_str);
+        }
+        i += 1;
+    }
+    return buff;
 }

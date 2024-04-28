@@ -11,12 +11,13 @@
 
 "."                             return '.';
 ","                             return ',';
+'=>'                            return '=>'
 "=="                            return '==';
 ">"                             return '>';
 "<"                             return '<';
 "!="                            return '!=';
 '>='                            return '>=';
-'<='                            return '<='
+'<='                            return '<=';
 "&&"                            return '&&';
 "||"                            return '||';
 "!"                             return '!';
@@ -36,6 +37,7 @@
 ";"                             return ';';
 "%"                             return '%';
 "#"                             return '#';
+'@f'                            return '@f';
 '@'                             return '@';
 
 "if"                            return 'IF';
@@ -48,6 +50,7 @@
 "as"                            return 'AS';
 "const"                         return 'CONST';
 "let"                           return 'LET';
+"enum"                          return 'ENUM';
 "stop"                          return 'STOP';
 "void"                          return 'VOID';
 "function"                      return 'FUNCTION';
@@ -163,6 +166,13 @@ statement
                 $$ = (ctx) => yy.generators.import_statement(yy, ctx.at(yyat), ctx.scope, $string_literal, $IDENTIFIER);
             }
         }
+    | IMPORT string_literal ';'
+        {
+            {
+                const yyat = @$;
+                $$ = (ctx) => yy.generators.import_statement(yy, ctx.at(yyat), ctx.scope, $string_literal);
+            }
+        }
     | CONST IDENTIFIER '=' literal_block ';'
         {
             {
@@ -182,6 +192,13 @@ statement
             {
                 const yyat = @$;
                 $$ = (ctx) => yy.generators.array_initializer(yy, ctx.at(yyat), ctx.scope, $IDENTIFIER, $array_initializer(ctx));
+            }
+        }
+    | ENUM IDENTIFIER '{' $property_list '}'
+        {
+            {
+                const yyat = @$;
+                $$ = (ctx) => yy.generators.enum_statement(yy, ctx.at(yyat), ctx, $IDENTIFIER, $property_list(ctx));
             }
         }
     | LET IDENTIFIER ';'
@@ -472,6 +489,13 @@ e
                 ));
             }
         }
+    | '@f'
+        {
+            {
+                const yyat = @$;
+                $$ = (ctx) => yy.generators.expression(yy, ctx.at(yyat), yy.program.string(ctx.file()));
+            }
+        }
     | literal_block
     | function_call
     | accessor
@@ -526,6 +550,10 @@ expression_list
         {
             $$ = (ctx) => [$expression(ctx)];
         }
+    | expression ','
+        {
+            $$ = (ctx) => [$expression(ctx)];
+        }
     | expression ',' expression_list
         {
             $$ = (ctx) => [$expression(ctx), ...$expression_list(ctx)];
@@ -534,6 +562,10 @@ expression_list
 
 identifier_list
     : IDENTIFIER
+        {
+            $$ = [$IDENTIFIER];
+        }
+    | IDENTIFIER ','
         {
             $$ = [$IDENTIFIER];
         }
@@ -560,6 +592,40 @@ array_initializer
             {
                 const yyat = @$;
                 $$ = (ctx) => [];
+            }
+        }
+    ;
+
+property_list
+    : property
+        {
+            $$ = (ctx) => [$property(ctx)];
+        }
+    | property ','
+        {
+            $$ = (ctx) => [$property(ctx)];
+        }
+    | property ',' property_list
+        {
+            $$ = (ctx) => [$property(ctx), ...$property_list(ctx)];
+        }
+    |
+        {
+            $$ = (ctx) => [];
+        }
+    ;
+
+property
+    : IDENTIFIER
+        {
+            {
+                $$ = (ctx) => ({identifier: $IDENTIFIER});
+            }
+        }
+    | IDENTIFIER '=' literal_block
+        {
+            {
+                $$ = (ctx) => ({identifier: $IDENTIFIER, value: $literal_block(ctx)});
             }
         }
     ;
@@ -597,7 +663,7 @@ literal_block
         {
             {
                 const yyat = @$;
-                $$ = (ctx) => yy.generators.expression(yy, ctx.at(yyat), yy.program.string('null'))
+                $$ = (ctx) => yy.generators.expression(yy, ctx.at(yyat), yy.program.string(''))
             }
         }
     ;
@@ -608,5 +674,5 @@ number_literal
     ;
 
 string_literal
-    : STRING {$$=yytext.slice(1,-1)}
+    : STRING {$$=yytext.slice(1,-1).replaceAll('\\', '')}
     ;
