@@ -1,17 +1,17 @@
 # Window
 ```js
 import "window" as window;
-// window.WIDTH
-// window.HEIGHT
-// window.ASPECT
-// window.DIAGONAL
-// window.MIN_X
-// window.MAX_X
-// window.MIN_Y
-// window.MAX_Y
+
+window.WIDTH;
+window.HEIGHT;
+window.ASPECT;
+window.DIAGONAL;
+window.MIN_X;
+window.MAX_X;
+window.MIN_Y;
+window.MAX_Y;
 
 function frame(delta_time, events) {
-    // do stuff
     // see "events" module
 }
 

@@ -1,3 +1,6 @@
+# Events
+This module should not be imported directly. See [Window](./window.md).
+
 ```js
 import "window" as window;
 

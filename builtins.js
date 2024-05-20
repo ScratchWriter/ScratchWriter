@@ -371,7 +371,7 @@ function builtins(yy) {
         })
     ));
 
-    yy.compiler.global.define('play_sound_sync', yy.compiler.macro(
+    yy.compiler.global.define('play_sound_wait', yy.compiler.macro(
         [Macro.arg('sound')],
         (yy, [sound]) => yy.compiler.stackblock({
             opcode: "sound_playuntildone",

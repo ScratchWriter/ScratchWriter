@@ -16,18 +16,21 @@ Create & assign variables.
 let bar = "bar";
 bar = FOO;
 ```
+
 Create compile-time constants with the const keyword.
 ```js
 const FOO = "foo"; // valid
 // const FOO = variable; // invalid
 ```
-Create lists
+
+Create lists (const only)
 ```js
 const foo = [1,2,3]; // valid
 // let foo = [1,2,3]; // invalid
 foo.push(4);
 console.log(foo.length());
 ```
+
 Access array elements
 ```js
 let first_item = foo[0];

@@ -14,8 +14,9 @@ ScratchWriter is a programing language that compiles to Scratch3 Projects. It ca
   - **[Control](./docs/syntax.md/#control-statements)**
   - **[Functions](./docs/syntax.md/#functions)**
   - **[Modules](./docs/syntax.md/#modules--assets)**
-- **[Functions](./docs/builtin.md)**
+- **[Functions & Blocks](./docs/builtin.md)**
 - **[Modules](./docs/modules/index.md)**
+- **[Packages](./docs/packages.md)**
 - **[CLI Usage](#cli-usage)**
 
 # Installing

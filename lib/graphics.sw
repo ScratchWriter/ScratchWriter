@@ -8,6 +8,7 @@ function reset() {
     hide();
     goto(0,0);
     set_pen_color(0);
+    set_pen_size(1);
 }
 
 function fill() {

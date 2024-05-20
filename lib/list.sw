@@ -70,6 +70,9 @@ function to_string(from) {
 
     function item(n) {
         let x = from.item(n);
+        if (x == null) {
+            return "null";
+        }
         if ((1*x) != x) {
             x = "\"" # x # "\"";
         }

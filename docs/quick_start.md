@@ -1,24 +1,26 @@
 # Quick Start Guide
 ## Install
+**Windows**
 1. Install [NodeJS](https://nodejs.org/en)
-1. Run `npm install -g scratchwriter` in a terminal window
+1. Run `npm install -g scratchwriter` in a Terminal or Powershell window.
 
 ## Hello Scratch
+![Hello World Program Player](./examples/hello_scratch_player.gif)
 ### 1. Create "hello_world.sw"
-Copy and Paste the program:
+Create a new folder for the project and create a file called "hello_world.sw" in your text editor. Copy and Paste the program:
 ```js
 show();
 goto(0,0);
 say("hello world");
 ```
 ### 2. Compile it!
-Open a Terminal and enter:
+Navigate to your project folder in a new terminal/powershell window and enter:
 ```sh
-sw3 build hello_world.sh
+sw3 build hello_world.sw
 ```
 You should see `"out/hello_world.sb3"` and `out/hello_world.html`
 ```
-folder
+current_folder
   |- hello_world.sw            <-- Source File
   |- out
       |- hello_world.sb3       <-- Scratch 3 File
@@ -42,7 +44,7 @@ import "window" as window;
 Next, let's create a function "frame" and tell scratch we want to use it to draw frames with the pen.
 ```js
 function frame(delta_time, events) {
-    // do stuff
+    // draw each frame here
 }
 
 window.start(frame);
@@ -85,5 +87,4 @@ function frame(delta_time, events) {
 
 window.start(frame);
 ```
-Open the HTML or SB3 file to see the program.
-![Hello World Program Player](./examples/hello_scratch_player.gif)
+Open the HTML or SB3 file to run the program. [Example](./examples/hello_scratch.md)

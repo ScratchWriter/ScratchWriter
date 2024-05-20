@@ -6,6 +6,7 @@ const { CompileError, FileError, CompilerSyntaxError, CompilerLexError } = requi
 const { builtins, operators } = require('./builtins');
 const parser_generators = require('./generators');
 const { BLOCKTYPE, BlockHints } = require('./hints');
+const app_dir = path.dirname(require.main.filename);
 
 const {
     ParseNode,
@@ -22,6 +23,9 @@ const DEFAULT_OPTIONS = {
     extentions: ['sw'],
     mainfiles: ['main', 'index'],
     warp: true,
+    page_size: 1000,
+    stack_pages: 100,
+    head_pages: 100,
 };
 
 class CompilerCtx {
@@ -61,8 +65,8 @@ class Compiler {
         this.program = program;
         this.options = Object.assign({}, DEFAULT_OPTIONS, options);
         this.modules = new Map();
-        this.used_namespaces = new Set(['main']);
-        this.global = new Namespace('main');
+        this.used_namespaces = new Set();
+        this.global = new Namespace(this.get_namespace_name('main'));
         this.register_counter = 0;
         this.proc_cache = {};
         const yy = {
@@ -73,6 +77,7 @@ class Compiler {
             debug: options.debug,
             generators: parser_generators,
         };
+        this.runtime = null;
         this.yy = Object.assign({}, parser.yy, yy);
 
         // define lots of builtins
@@ -86,6 +91,23 @@ class Compiler {
             },
             {anonymous: true}
         );
+
+        // define
+        this.def_const("__PAGE_SIZE__", this.options.page_size);
+        this.def_const("__STACK_PAGES__", this.options.stack_pages);
+        this.def_const("__HEAP_PAGES__", this.options.head_pages);
+    }
+
+    def_const(identifier, value) {
+        if (typeof value === "string") {
+            this.global.define(identifier, this.expression(this.program.string(value), null), null);
+            return;
+        }
+        if (typeof value === "number") {
+            this.global.define(identifier, this.expression(this.program.number(value), null), null);
+            return;
+        }
+        throw new Error('Constant must be string or number');
     }
 
     // read a file
@@ -98,10 +120,12 @@ class Compiler {
     // differentiate duplicate namespaces names
     get_namespace_name(name, n=0) {
         if (!n && !this.used_namespaces.has(name)) {
+            this.used_namespaces.add(name);
             return name;
         }
         const name_ext = name + '_' + String(n);
         if (this.used_namespaces.has(name_ext)) return this.get_namespace_name(name, n+1);
+        this.used_namespaces.add(name_ext);
         return name_ext;
     }
 
@@ -543,7 +567,11 @@ class Compiler {
 
     // variable assignment statement
     assign_var_statement(scope, accessor, value, opcode, at) {
-        const field = accessor.unwrap_field().unwrap_unsafe();
+        const invalid = () => {
+            throw new CompileError(`${accessor.identify()} is not a variable`, at);
+        };
+        const field = accessor.unwrap_field().error(invalid).unwrap_unsafe();
+        if (this.program.blockwriter.opcode(accessor.unwrap_expression().error(invalid).unwrap_unsafe().id) !== 'data_variable') invalid();
         return this.stackblock({
             opcode,
             inputs: {VALUE: this.inp(value)},

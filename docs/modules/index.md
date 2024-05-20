@@ -7,17 +7,26 @@ import "module-name" as anything;
 ```js
 import "math" as math;
 ```
-### Included Modules
-- [Math](./math.md)
-- [Color](./color.md)
-- [Console](./console.md)
-- [Text](./text.md)
-- [Graphics](./graphics.md)
-- [Window](./window.md)
-- [Events](./events.md)
-- [List](./list.md)
-- [String](./string.md)
-- [Input](./input.md)
-- [Case](./case.md)
-- [Expect](./expect.md)
+### Basic Modules
+- Utilities
+    - [List](./list.md)
+    - [String](./string.md)
+    - [Math](./math.md)
+- I/O
+    - [Console](./console.md)
+    - [Input](./input.md)
+    - [Window](./window.md)
+    - [Case](./case.md)
+- Graphics & Pen
+    - [Color](./color.md)
+    - [Text](./text.md)
+    - [Graphics](./graphics.md)
+- Errors & Testing
+    - [Error](./error.md)
+    - [Expect](./expect.md)
+
+### Advanced Modules
+- [Runtime](./runtime.md)
 - [Linked](./linked.md)
+- [Events](./events.md)
+- [Vector](./vector.md)

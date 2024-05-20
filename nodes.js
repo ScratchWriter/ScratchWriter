@@ -144,7 +144,6 @@ class Namespace {
         this.private_symbols = new Map();
         this.up = up;
         this.id = id;
-        this.namespace = true;
     }
 
     define(identifier, value, at, is_private = false) {

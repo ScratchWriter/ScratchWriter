@@ -1,4 +1,4 @@
-# Case (detection)
+# Case Detection
 Scratch is not case-sensitive so some trickery is required if you want case-sensative text.
 
 ### Basic Usage

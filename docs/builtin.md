@@ -1,4 +1,4 @@
-# Builtin Functions
+# Builtin Functions & Blocks
 
 Motion
 ```js
@@ -35,7 +35,7 @@ number = get_costume_number();
 Sound
 ```js
 play_sound(sound);
-play_sound_sync(sound);
+play_sound_wait(sound);
 volume = get_volume();
 ```
 
