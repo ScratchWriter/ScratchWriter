@@ -1,7 +1,13 @@
-# 🖋️ ScratchWriter
-ScratchWriter is a programing language that compiles to Scratch3 Projects. It can also run projects locally using TurboWarp. It shares much of it's syntax with JavaScript. Check out the [Quick Start Guide](./docs/quick_start.md) to get started!
+<h1 align="center">
+  <img height="160" src="./images/scratchwriter_hero.png" alt="ScratchWriter">
+</h1>
+
+> Compile JavaScript-like code to project files for [scratch.mit.edu](https://scratch.mit.edu).
+
 
 ![Hello World Program Code and Blocks](./docs/images/hello_scratch/hello_scratch.png)
+
+> Check out the [Quick Start Guide](./docs/quick_start.md) to get started with ScratchWriter!
 
 # 🗒️ Table of Contents ➡️ [Quick Start Guide](./docs/quick_start.md) 
 ### **[Documentation](./readme.md)**
@@ -58,4 +64,4 @@ Steps:
 ### Disclaimer
 This program comes with ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law. DO NOT COMPILE / USE PROGRAMS FROM SOURCES YOU DO NOT TRUST. USE AT YOUR OWN RISK.
 
-I only maintain this as a side project, do not expect everything to be up to date or well documented. When installing, `npm` will probably yell at you about outdated packages. This project runs locally so keeping dependencies up to date isn't a huge priority for me, I try to fix it every once and a while though.
+I only maintain this as a side project. Do not expect everything to be up to date or well documented. When installing, `npm` will probably yell at you about outdated packages. This project runs locally so keeping dependencies up to date isn't a huge priority for me, I try to fix it every once and a while though.
