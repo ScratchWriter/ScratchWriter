@@ -2,8 +2,8 @@
 ## Install
 1. Install [NodeJS](https://nodejs.org/en)
 1. Clone this repo and `cd` into it
-1. `npm install`
-1. `npm link`
+1. run `npm install` to install dependencies
+1. run `npm link` so you can run the program from the command line
 
 ## Hello Scratch
 ![Hello World Program Player](./examples/hello_scratch_player.gif)
@@ -32,7 +32,9 @@ current_folder
 Copy the full path for `hello_world.html` and paste it into a browser. You should see your project start playing. When you make any changes to your project you can run the build command and reload this page to try them out. You can also use the `watch` command to automatically build your project when changes are detected.
 
 ### 4. Upload "hello_world.sb3" to Scratch
-Now that we have confirmed our project runs correctly, we can upload it to Scratch. Create a new Project and select `File > Load from your computer` then navigate to `hello_world.sb3` and select it.
+Now that we have confirmed our project runs correctly, we can upload it to Scratch. Create a new project and select `File > Load from your computer` then navigate to `hello_world.sb3` and select it.
+
+![Hello World Program Player](/docs/images/upload_scratch_3.png)
 
 ## Upgrading Hello Scratch
 We will need to use some built-in modules. Copy and Paste this code into your "hello_world.sw" file.
