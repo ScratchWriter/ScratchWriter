@@ -20,7 +20,6 @@ ScratchWriter is a programing language that compiles to Scratch3 Projects. It ca
 - **[CLI Usage](#cli-usage)**
 
 # Installing
-## Manual
 1. Install [NodeJS](https://nodejs.org/en)
 1. Clone this repo and `cd` into it
 1. `npm install`
