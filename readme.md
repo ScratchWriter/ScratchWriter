@@ -1,5 +1,5 @@
 # 🖋️ ScratchWriter
-ScratchWriter is a programing language that compiles to Scratch3 Projects. It can also run projects locally using TurboWarp. It shares much of it's syntax with JavaScirpt. Check out the [Quick Start Guide](./docs/quick_start.md) to get started!
+ScratchWriter is a programing language that compiles to Scratch3 Projects. It can also run projects locally using TurboWarp. It shares much of it's syntax with JavaScript. Check out the [Quick Start Guide](./docs/quick_start.md) to get started!
 
 ![Hello World Program Code and Blocks](./docs/images/hello_scratch/hello_scratch.png)
 
