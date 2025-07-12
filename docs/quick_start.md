@@ -1,8 +1,9 @@
 # Quick Start Guide
 ## Install
-**Windows**
 1. Install [NodeJS](https://nodejs.org/en)
-1. Run `npm install -g scratchwriter` in a Terminal or Powershell window.
+1. Clone this repo and `cd` into it
+1. `npm install`
+1. `npm link`
 
 ## Hello Scratch
 ![Hello World Program Player](./examples/hello_scratch_player.gif)
