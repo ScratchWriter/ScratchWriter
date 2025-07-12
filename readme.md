@@ -56,4 +56,6 @@ Steps:
 - If you want to use the version of the project you built you may want to run `npm link` to make the command available and allow other projects to import it.
 
 ### Disclaimer
-This program comes with ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law. DO NOT COMPILE / USE PROGRAMS FROM SOURCES YOU DO NOT TRUST.
+This program comes with ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law. DO NOT COMPILE / USE PROGRAMS FROM SOURCES YOU DO NOT TRUST. USE AT YOUR OWN RISK.
+
+I only maintain this as a side project, do not expect everything to be up to date or well documented. When installing, `npm` will probably yell at you about outdated packages. This project runs locally so keeping dependencies up to date isn't a huge priority for me, I try to fix it every once and a while though.
