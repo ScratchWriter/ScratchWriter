@@ -1,20 +1,22 @@
 # Quick Start Guide
-## Install
+### Installing
+Currently these instructions require a bit of command line knowledge and are only tested on Windows 11. 
 1. Install [NodeJS](https://nodejs.org/en)
-1. Clone this repo and `cd` into it
+1. `git clone` this repository and `cd` into it
 1. run `npm install` to install dependencies
 1. run `npm link` so you can run the program from the command line
 
-## Hello Scratch
+# Hello Scratch
 ![Hello World Program Player](./examples/hello_scratch_player.gif)
-### 1. Create "hello_world.sw"
+> This is the program you will be making!
+## 1. Create "hello_world.sw"
 Create a new folder for the project and create a file called "hello_world.sw" in your text editor. Copy and Paste the program:
 ```js
 show();
 goto(0,0);
 say("hello world");
 ```
-### 2. Compile it!
+## 2. Compile it!
 Navigate to your project folder in a new terminal/powershell window and enter:
 ```sh
 sw3 build hello_world.sw
@@ -28,15 +30,17 @@ current_folder
       |- hello_world.html      <-- Bundled Project Player
 ```
 
-### 3. Run "hello_world.html" in your browser
-Copy the full path for `hello_world.html` and paste it into a browser. You should see your project start playing. When you make any changes to your project you can run the build command and reload this page to try them out. You can also use the `watch` command to automatically build your project when changes are detected.
+## 3. Run "hello_world.html" in your browser
+Copy the full path for `hello_world.html` and paste it into a browser.
 
-### 4. Upload "hello_world.sb3" to Scratch
+If everything worked correctly, you should see your project start playing. When you make any changes to your project you can run the build command again and reload the page to update it. You can also use the `watch` command to automatically build your project when changes are detected. When you're done working with the `watch` command `ctrl+c` will return to a command prompt on most terminals.
+
+## 4. Upload "hello_world.sb3" to Scratch
 Now that we have confirmed our project runs correctly, we can upload it to Scratch. Create a new project and select `File > Load from your computer` then navigate to `hello_world.sb3` and select it.
 
 ![Hello World Program Player](/docs/images/upload_scratch_3.png)
 
-## Upgrading Hello Scratch
+# Making it look nice
 We will need to use some built-in modules. Copy and Paste this code into your "hello_world.sw" file.
 ```js
 import "text" as text;
@@ -68,7 +72,7 @@ function frame(delta_time, events) {
 }
 ```
 
-## Final Program
+# Final Program
 You `hello_world.sw` file should now look like this.
 ```js
 import "text" as text;
