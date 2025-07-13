@@ -2,6 +2,7 @@
   <br>
   <img height="160" src="./images/scratchwriter_hero.png" alt="ScratchWriter">
   <br>
+  <br> 
   <br>
 </h1>
 
