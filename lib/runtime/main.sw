@@ -83,7 +83,7 @@ function sizeof(ptr) {
 }
 
 function memset(ptr, value, size) {
-    let i = 0;
+    let i = ptr;
     repeat(size) {
         memory[i] = value;
         i += 1;

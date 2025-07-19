@@ -65,7 +65,7 @@ function merge_blocks(lower, upper) {
             @
         );
     }
-    if (block_free[upper] == false || block_free[upper] == false) {
+    if (block_free[lower] == false || block_free[upper] == false) {
         error.crash("failed to merge blocks: not free", @);
     }
     let new_size = block_size[lower] + block_size[upper];

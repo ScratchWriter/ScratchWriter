@@ -787,6 +787,13 @@ function builtins(yy) {
             }
         })
     ));
+
+    yy.compiler.global.define('pen_stamp', yy.compiler.macro(
+        [],
+        (yy, []) => yy.compiler.stackblock({
+            opcode: "pen_stamp",
+        })
+    ));
 }
 
 module.exports = {builtins,operators};

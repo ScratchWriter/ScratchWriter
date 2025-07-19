@@ -83,4 +83,6 @@ pen_down();
 pen_up();
 set_pen_size(size);
 set_pen_color(color);
+pen_clear();
+pen_stamp();
 ```
