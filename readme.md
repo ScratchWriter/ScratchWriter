@@ -1,5 +1,8 @@
 <h1 align="center">
+  <br>
   <img height="160" src="./images/scratchwriter_hero.png" alt="ScratchWriter">
+  <br>
+  <br> 
 </h1>
 
 > Compile JavaScript-like code to project files for [scratch.mit.edu](https://scratch.mit.edu).

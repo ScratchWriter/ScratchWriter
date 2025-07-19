@@ -6,6 +6,8 @@ Vector is a container for dynamic size arrays
 import "vector" as vector;
 import "runtime" as runtime;
 
+runtime.configure(65536);
+
 let shopping_list = vector.new();
 vector.push(shopping_list, "flour");
 vector.push(shopping_list, "yeast");
