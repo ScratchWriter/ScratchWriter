@@ -11,8 +11,8 @@ enum vec {
 
 function new_sized(start_size) {
     let ptr = runtime.malloc(3);
-    let arr = runtime.malloc(start_size);
-    runtime.memory[ptr + vec.data] = arr;
+    let data = runtime.malloc(start_size);
+    runtime.memory[ptr + vec.data] = data;
     runtime.memory[ptr + vec.len] = 0;
     runtime.memory[ptr + vec.cap] = start_size;
     return ptr;
@@ -25,10 +25,12 @@ function new() {
 function grow(ptr) {
     let old_cap = runtime.memory[ptr + vec.cap];
     let new_cap = old_cap * 2;
-    let arr = runtime.malloc(new_cap);
-    runtime.memcpy(runtime.memory[ptr + vec.data], arr, old_cap);
+    let old_data = runtime.memory[ptr + vec.data];
+    let new_data = runtime.malloc(new_cap);
+    runtime.memcpy(new_data, old_data, old_cap);
     runtime.free(runtime.memory[ptr + vec.data]);
-    runtime.memory[ptr + vec.data] = arr;
+    runtime.memory[ptr + vec.data] = new_data;
+    runtime.memory[ptr + vec.cap] = new_cap;
 }
 
 function start(ptr) {
@@ -44,12 +46,15 @@ function length(ptr) {
 }
 
 function push(ptr, item) {
-    let i = runtime.memory[ptr + vec.len];
-    runtime.memory[ptr + vec.len] = i + 1;
-    if (runtime.memory[ptr + vec.len] == runtime.memory[ptr + vec.cap]) {
+    let old_len = runtime.memory[ptr + vec.len];
+    let cap = runtime.memory[ptr + vec.cap];
+    if (old_len == cap || old_len > cap) {
         grow(ptr);
+        cap = runtime.memory[ptr + vec.cap];
     }
-    runtime.memory[runtime.memory[ptr + vec.data] + i] = item;
+    let new_data = runtime.memory[ptr + vec.data];
+    runtime.memory[new_data + old_len] = item;
+    runtime.memory[ptr + vec.len] = old_len + 1;
 }
 
 function pop(ptr) {
@@ -81,8 +86,26 @@ function reset(ptr) {
 
 function for_each(ptr, callback) {
     let i = runtime.memory[ptr + vec.data];
-    repeat(end(ptr)-i) {
+    repeat(runtime.memory[ptr + vec.len]) {
         callback(runtime.memory[i]);
         i += 1;
     }
+}
+
+function join(ptr, delim) {
+    let ptrlen = length(ptr);
+    if (ptrlen == 0) {
+        return "";
+    }
+    let buff = item(ptr, 0);
+    if (ptrlen == 1) {
+        return buff;
+    }
+    let n = 1;
+    repeat(length(ptr)-1) {
+        buff = buff # delim # item(ptr, n);
+        n += 1;
+    }
+    buff = buff # item(ptr, n);
+    return buff;
 }
