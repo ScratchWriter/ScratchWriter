@@ -23,6 +23,7 @@
   - **[Functions](./docs/syntax.md/#functions)**
   - **[Modules](./docs/syntax.md/#modules--assets)**
 - **[Builtin Functions & Blocks](./docs/builtin.md)**
+- **[Lists](./docs/lists.md)**
 - **[Troubleshooting & Quirks Guide](./docs/troubleshooting.md)**
 - **[Modules](./docs/modules/index.md)**
 - **[Compiler](#cli-usage)**
