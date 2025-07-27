@@ -1,12 +1,5 @@
 # Modules
-### Importing
-```js
-import "module-name" as anything;
-```
-### Example
-```js
-import "math" as math;
-```
+
 ### Basic Modules
 - Utilities
     - [List](./list.md)
@@ -25,8 +18,17 @@ import "math" as math;
     - [Error](./error.md)
     - [Expect](./expect.md)
 
-### Advanced Modules
+### Advanced & Experimental Modules
 - [Runtime](./runtime.md)
 - [Linked](./linked.md)
 - [Events](./events.md)
 - [Vector](./vector.md)
+
+# Importing
+```js
+import "module-name" as anything;
+```
+### Example
+```js
+import "math" as math;
+```

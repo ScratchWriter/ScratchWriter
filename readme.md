@@ -25,7 +25,12 @@
 - **[Builtin Functions & Blocks](./docs/builtin.md)**
 - **[Lists](./docs/lists.md)**
 - **[Troubleshooting & Quirks Guide](./docs/troubleshooting.md)**
-- **[Modules](./docs/modules/index.md)**
+- **[Standard Modules](./docs/modules/index.md)**
+  - **[List](./docs/modules/list.md)**
+  - **[String](./docs/modules/string.md)**
+  - **[Math](./docs/modules/math.md)**
+  - **[Graphics](./docs/modules/graphics.md)**
+  - ... and more
 - **[Compiler](#cli-usage)**
   - **[Packages](./docs/packages.md)**
   - **[CLI Usage](#cli-usage)**
