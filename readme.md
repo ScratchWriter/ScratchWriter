@@ -9,7 +9,6 @@
 
 
 ![Hello World Program Code and Blocks](./docs/images/hello_scratch/hello_scratch.png)
-
 > Check out the [Quick Start Guide](./docs/quick_start.md) to get started with ScratchWriter!
 
 # 🗒️ Table of Contents ➡️ [Quick Start Guide](./docs/quick_start.md) 
@@ -23,10 +22,12 @@
   - **[Control](./docs/syntax.md/#control-statements)**
   - **[Functions](./docs/syntax.md/#functions)**
   - **[Modules](./docs/syntax.md/#modules--assets)**
-- **[Functions & Blocks](./docs/builtin.md)**
+- **[Builtin Functions & Blocks](./docs/builtin.md)**
+- **[Troubleshooting & Quirks Guide](./docs/troubleshooting.md)**
 - **[Modules](./docs/modules/index.md)**
-- **[Packages](./docs/packages.md)**
-- **[CLI Usage](#cli-usage)**
+- **[Compiler](#cli-usage)**
+  - **[Packages](./docs/packages.md)**
+  - **[CLI Usage](#cli-usage)**
 
 # ⚙️ Installing
 1. Install [NodeJS](https://nodejs.org/en)
@@ -51,7 +52,7 @@ sw3 build ./src/main.sw --out-dir ./out/ --out-name my_project
 | :---------------: | :------------------: | ------------------- | :-----: | ----------- |
 | Scratch 3         | `.sb3`               | `--target-sb3`      | Yes     | Normal Scratch3 File. |
 | HTML Package      | `.html`              | `--target-html`     | Yes     | Package Program into an HTML file with TurboWarp. |
-| project blocks    | `.blocks.json`       | `--target-blocks`   | No      | A more readable format of the blocks. |
+| project blocks    | `.blocks.json`       | `--target-blocks`   | No      | Streamlined project.json for debugging. |
 | project.json dump | `.project.json`      | `--target-sb3-json` | No      | Dump the contents of the project.json file. |
 
 # 🔨 Building

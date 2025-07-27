@@ -1,16 +1,29 @@
-# Syntax
-ScratchWriter shares much of its syntax with JavaScript. But it has some note-worthy limitations:
- - No Objects.
- - Functions & Lists are less dynamic.
- - Semicolons are required.
+# Syntax 
+> ScratchWriter shares much of its syntax with JavaScript.
 
 ### Sections:
+- [ScratchWriter vs JavaScript](#ScratchWriter--JavaScript)
 - [Variables & Lists](#variables--lists)
 - [Control](#control-statements)
 - [Functions](#functions)
 - [Modules](#modules--assets)
 
-## Variables & Lists
+### [Troubleshooting Guide](./troubleshooting.md)
+> Has more details on quirks and differences between ScratchWriter and JavaScript.
+
+## ScratchWriter != JavaScript
+Some of the many note-worthy differences between ScratchWriter and JavaScript:
+ - Semicolons are required.
+ - No Objects or Classes.
+ - Functions are less dynamic.
+ - [Lists](./lists.md) are less dynamic and their methods are not compatible with JavaScript Arrays.
+ - No arrow functions.
+ - No `<=` and `>=` operators.
+ - No `/* multiline comments */`.
+ - Builtins like `Array` and `Math` have counterparts but are not compatible.
+ - Extra control statements for `repeat` `until` and `forever` exist.
+
+## Variables & [Lists](./lists.md)
 Create & assign variables.
 ```js
 let bar = "bar";
@@ -35,6 +48,11 @@ Access array elements
 ```js
 let first_item = foo[0];
 foo[1] = foo[1] + 1;
+```
+
+Use pseudo-methods on arrays
+```js
+foo.push(4);
 ```
 
 ## Control Statements
