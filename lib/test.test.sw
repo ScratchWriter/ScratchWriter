@@ -7,5 +7,6 @@ import "math.test";
 import "color.test";
 import "linked.test";
 import "string.test";
+import "list.test";
 
 expect.pass(@f);

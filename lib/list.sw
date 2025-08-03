@@ -98,3 +98,61 @@ function for_each(list, callback) {
         i += 1;
     }
 }
+
+function filter(list, callback) {
+    let i = 0;
+    repeat(list.length()) {
+        if (!callback(list[i])) {
+            list.delete(i);
+            i += -1;
+        }
+        i += 1;
+    }
+}
+
+function compare_numbers(a, b) {
+    return a - b;
+}
+
+function sort(list) {
+    sort_by(list, compare_numbers);
+}
+
+function sort_by(list, compare) {
+    function _swap(arr, index1, index2) {
+        let temp = arr[index1];
+        arr[index1] = arr[index2];
+        arr[index2] = temp;
+    }
+
+    function _quicksort_partition_and_recurse(arr, low, high, compare, current_i, current_j, pivot_val) {
+        if (!(current_j < high)) {
+            _swap(arr, current_i + 1, high);
+
+            let pivotIndex = current_i + 1;
+
+            _quicksort_recursive(arr, low, pivotIndex - 1, compare);
+            _quicksort_recursive(arr, pivotIndex + 1, high, compare);
+            return;
+        }
+
+        if (!(compare(arr[current_j], pivot_val) > 0)) {
+            _swap(arr, current_i + 1, current_j);
+            _quicksort_partition_and_recurse(arr, low, high, compare, current_i + 1, current_j + 1, pivot_val);
+        } else {
+            _quicksort_partition_and_recurse(arr, low, high, compare, current_i, current_j + 1, pivot_val);
+        }
+    }
+
+    function _quicksort_recursive(arr, low, high, compare) {
+        if (!(low < high)) {
+            return;
+        }
+
+        let pivot_val = arr[high];
+
+        _quicksort_partition_and_recurse(arr, low, high, compare, low - 1, low, pivot_val);
+    }
+
+    _quicksort_recursive(list, 0, list.length() - 1, compare);
+}
