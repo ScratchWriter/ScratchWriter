@@ -59,6 +59,10 @@ function to_deg(rad) {
     return 57.2957795131 * rad;
 }
 
+function lerp(a, b, t) {
+    return a + (b - a) * t;
+}
+
 function round_to_places(x, places) {
     let shift = pow_10(places);
     return round(x*shift)/shift;

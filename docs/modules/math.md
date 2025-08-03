@@ -17,6 +17,7 @@ let rad = math.to_rad(deg);
 let deg = math.to_deg(rad);
 let bool = math.is_finite(math.INFINITY); // false
 let string = math.round_to_places(math.PI, 2); // 3.14
+let interpolation = math.lerp(a, b, t);
 
 // rotation
 let x = math.rotate_x1(x, y, deg);
