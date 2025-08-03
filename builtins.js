@@ -72,6 +72,30 @@ const operators = {
             })),
         },
     }),
+    gte: (yy, [lhs, rhs]) => yy.compiler.reporter({
+        opcode: "operator_not",
+        inputs: {
+            OPERAND: yy.compiler.inp_boolean(yy.compiler.program.unlinked_reporter({
+                opcode: "operator_lt",
+                inputs: {
+                    OPERAND1: inp(lhs),
+                    OPERAND2: inp(rhs),
+                },
+            })),
+        },
+    }),
+    lte: (yy, [lhs, rhs]) => yy.compiler.reporter({
+        opcode: "operator_not",
+        inputs: {
+            OPERAND: yy.compiler.inp_boolean(yy.compiler.program.unlinked_reporter({
+                opcode: "operator_gt",
+                inputs: {
+                    OPERAND1: inp(lhs),
+                    OPERAND2: inp(rhs),
+                },
+            })),
+        },
+    }),
     gt: (yy, [lhs, rhs]) => yy.compiler.reporter({
         opcode: "operator_gt",
         inputs: {

@@ -13,11 +13,11 @@
 ","                             return ',';
 '=>'                            return '=>'
 "=="                            return '==';
+'>='                            return '>=';
+'<='                            return '<=';
 ">"                             return '>';
 "<"                             return '<';
 "!="                            return '!=';
-'>='                            return '>=';
-'<='                            return '<=';
 "&&"                            return '&&';
 "||"                            return '||';
 "!"                             return '!';
@@ -402,6 +402,30 @@ e
                 );
             }
         }
+    | e '>=' e
+        {
+            {
+                const yyat = @$;
+                $$ = (ctx) => yy.generators.use_macro(
+                    yy,
+                    ctx.at(yyat),
+                    yy.compiler.operators.gte,
+                    [$e1(ctx), $e2(ctx)]
+                );
+            }
+        }
+    | e '<=' e
+        {
+            {
+                const yyat = @$;
+                $$ = (ctx) => yy.generators.use_macro(
+                    yy,
+                    ctx.at(yyat),
+                    yy.compiler.operators.lte,
+                    [$e1(ctx), $e2(ctx)]
+                );
+            }
+        }
     | e '>' e
         {
             {
@@ -519,11 +543,11 @@ function_call
                 $$ = (ctx) => yy.generators.function_call_expression(yy, ctx.at(yyat), $accessor(ctx), []);
             }
         }
-    | accessor '(' expression_list ')'
+    | accessor '(' maybe_expression_list ')'
         {
             {
                 const yyat = @$;
-                $$ = (ctx) => yy.generators.function_call_expression(yy, ctx.at(yyat), $accessor(ctx), $expression_list(ctx));
+                $$ = (ctx) => yy.generators.function_call_expression(yy, ctx.at(yyat), $accessor(ctx), $maybe_expression_list(ctx));
             }
         }
     ;
@@ -547,17 +571,18 @@ accessor
 
 expression_list
     : expression
-        {
-            $$ = (ctx) => [$expression(ctx)];
-        }
-    | expression ','
-        {
-            $$ = (ctx) => [$expression(ctx)];
-        }
-    | expression ',' expression_list
-        {
-            $$ = (ctx) => [$expression(ctx), ...$expression_list(ctx)];
-        }
+        { $$ = (ctx) => [ $expression(ctx) ]; }
+    | expression_list ',' expression
+        { $$ = (ctx) => [ ...$expression_list(ctx), $expression(ctx) ]; }
+    ;
+
+maybe_expression_list
+    : expression_list ','    // allows trailing comma
+        { $$ = (ctx) => $expression_list(ctx); }
+    | expression_list        // standard list
+        { $$ = (ctx) => $expression_list(ctx); }
+    |                        // empty argument list
+        { $$ = (ctx) => null; }
     ;
 
 identifier_list
@@ -580,11 +605,11 @@ identifier_list
     ;
 
 array_initializer
-    : '[' expression_list ']'
+    : '[' maybe_expression_list ']'
         {
             {
                 const yyat = @$;
-                $$ = (ctx) => $expression_list(ctx);
+                $$ = (ctx) => $maybe_expression_list(ctx);
             }
         }
     | '[' ']'

@@ -18,7 +18,6 @@ Some of the many note-worthy differences between ScratchWriter and JavaScript:
  - Functions are less dynamic.
  - [Lists](./lists.md) are less dynamic and their methods are not compatible with JavaScript Arrays.
  - No arrow functions.
- - No `<=` and `>=` operators.
  - `variable + variable` is addition, use `variable # variable` to join.
  - No `/* multiline comments */`.
  - Builtins like `Array` and `Math` have counterparts but are not compatible.
