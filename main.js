@@ -299,29 +299,35 @@ program.command('watch')
     .option('--debug', undefined, false)
     .action(async (infile, options) => {
         const chalk = await _chalk;
-
         await catch_compiler_errors(async () => {
             debug_init(options);
             const file = loader.file(infile, options);
             file.print_info();
             clean(file, options);
 
-            let flag = true;
-            file.watch_dir(['.sb3', '.json', '.html', '.blocks.json', '.blocks.json'], (changed_file, stats) => {
-                if (options.debug) console.log(`changes detected in: `, changed_file);
-                flag = true;
+            let lastupdate = Date.now();
+            let watch_threshold = 500;
+            let max_watch_threshold = 5000;
+            file.watch_dir(['.sb3', '.json', '.html', '.blocks.json', '.blocks.json'], async (changed_file, stats) => {
+                lastupdate = Date.now();
             });
-            setInterval(async ()=>{
-                if (flag) {
+
+            setInterval(async()=>{
+                if (lastupdate !== undefined && Date.now()-lastupdate > watch_threshold) {
+                    lastupdate = undefined;
+                    if (options.debug) console.log(`changes detected in: `, changed_file);
+                    console.log();
                     console.log(chalk.green('changes detected'));
-                    flag = false;
                     try {
+                        let compile_start = Date.now();
                         await configure(file, options);
+                        const compile_time = Date.now() - compile_start;
+                        watch_threshold = Math.min(Math.max(watch_threshold, compile_time/2), max_watch_threshold);
                     } catch (err) {
                         console.error(err);
                     }
                 }
-            }, 1000);
+            }, 500);
         }, options.debug);
     });
 
