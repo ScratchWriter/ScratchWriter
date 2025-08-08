@@ -36,6 +36,10 @@ Sound
 ```js
 play_sound(sound);
 play_sound_wait(sound);
+clear_sound_effects();
+set_pan(pan);
+set_volume(volume);
+set_pitch(pitch);
 volume = get_volume();
 ```
 

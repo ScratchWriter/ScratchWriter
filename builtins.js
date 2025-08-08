@@ -242,7 +242,7 @@ function builtins(yy) {
         [],
         (yy, []) => yy.compiler.stackblock({
             opcode: "motion_setrotationstyle",
-            inputs: {
+            fields: {
                 STYLE: [
                     "don't rotate",
                     null
@@ -255,7 +255,7 @@ function builtins(yy) {
         [],
         (yy, []) => yy.compiler.stackblock({
             opcode: "motion_setrotationstyle",
-            inputs: {
+            fields: {
                 STYLE: [
                     "all around",
                     null
@@ -405,10 +405,53 @@ function builtins(yy) {
         })
     ));
 
+    yy.compiler.global.define('set_volume', yy.compiler.macro(
+        [Macro.arg('volume')],
+        (yy, [volume]) => yy.compiler.stackblock({
+            opcode: "sound_setvolumeto",
+            inputs: {
+                VOLUME: inp(volume),
+            },
+        })
+    ));
+
+    yy.compiler.global.define('set_pitch', yy.compiler.macro(
+        [Macro.arg('pitch')],
+        (yy, [pitch]) => yy.compiler.stackblock({
+            opcode: "sound_seteffectto",
+            inputs: {
+                VALUE: inp(pitch),
+            },
+            fields: {
+                EFFECT: ["PITCH", null],
+            }
+        })
+    ));
+
+    yy.compiler.global.define('set_pan', yy.compiler.macro(
+        [Macro.arg('pan')],
+        (yy, [pan]) => yy.compiler.stackblock({
+            opcode: "sound_seteffectto",
+            inputs: {
+                VALUE: inp(pan),
+            },
+            fields: {
+                EFFECT: ["PAN", null],
+            }
+        })
+    ));
+
     yy.compiler.global.define('get_volume', yy.compiler.macro(
         [],
         (yy, []) => yy.compiler.reporter({
             opcode: "sound_volume",
+        })
+    ));
+
+    yy.compiler.global.define('clear_sound_effects', yy.compiler.macro(
+        [],
+        (yy, [sound]) => yy.compiler.stackblock({
+            opcode: "sound_cleareffects",
         })
     ));
 
