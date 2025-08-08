@@ -68,10 +68,36 @@ function pop(ptr) {
 }
 
 function item(ptr, n) {
-    if (n > runtime.memory[ptr + vec.cap]) {
+    if (n >= runtime.memory[ptr + vec.len]) {
         error.crash("Index out of bounds", @);
     }
     return runtime.memory[runtime.memory[ptr + vec.data] + n];
+}
+
+function delete(ptr, n) {
+    let ptr_len = runtime.memory[ptr + vec.len];
+    if (n >= ptr_len) {
+        error.crash("Index out of bounds", @);
+    }
+    let i = runtime.memory[ptr + vec.data] + n;
+    repeat(ptr_len - n - 1) {
+        runtime.memory[i] = runtime.memory[i + 1];
+        i += 1;
+    }
+    runtime.memory[ptr + vec.len] = ptr_len - 1;
+}
+
+function indexof(ptr, item) {
+    let data = runtime.memory[ptr + vec.data];
+    let ptr_len = runtime.memory[ptr + vec.len];
+    let i = 0;
+    repeat(ptr_len) {
+        if (runtime.memory[data + i] == item) {
+            return i;
+        }
+        i += 1;
+    }
+    return -1;
 }
 
 function free(ptr) {

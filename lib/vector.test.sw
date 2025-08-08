@@ -33,4 +33,16 @@ repeat(100) {
     i = i + 1;
 }
 
+vec.reset(a);
+vec.push(a, "a");
+vec.push(a, "b");
+vec.push(a, "c");
+vec.push(a, "d");
+expect.equal(4, vec.length(a), @);
+expect.equal(1, vec.indexof(a, "b"), @);
+vec.delete(a, 1);
+expect.equal(-1, vec.indexof(a, "b"),@);
+expect.equal("c", vec.item(a, 1),@);
+expect.equal(3, vec.length(a), @);
+
 expect.pass(@f);
