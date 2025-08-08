@@ -12,8 +12,6 @@ gfx.fill_rgb(255, 255, 255);
 
 // draws a simple line
 gfx.line(x1, y1, x2, y2);
-// draws a line, clipped to the window
-gfx.line_clipped(x1, y1, x2, y2, pen_size);
 
 // draws a solid circle
 gfx.fill_circle(x, y, radius);
