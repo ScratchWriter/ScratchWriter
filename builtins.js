@@ -450,7 +450,7 @@ function builtins(yy) {
 
     yy.compiler.global.define('clear_sound_effects', yy.compiler.macro(
         [],
-        (yy, [sound]) => yy.compiler.stackblock({
+        (yy, []) => yy.compiler.stackblock({
             opcode: "sound_cleareffects",
         })
     ));
