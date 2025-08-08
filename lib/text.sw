@@ -28,7 +28,15 @@ function load_string(str) {
     return width;
 }
 
-function draw_char(code, x,y, scale) {
+function _text_goto(mode, x,y) {
+    if (mode == edges.SHARP) {
+        goto(round(x), round(y));
+    } else {
+        goto(x,y);
+    }
+}
+
+function draw_char(code, x,y, scale, mode, slant) {
     pen_up();
 
     let n = code * STRIDE;
@@ -47,7 +55,7 @@ function draw_char(code, x,y, scale) {
         if (vx==-1 && vy==-1) {
             pen_up();
         } else {
-            goto((vx*scale)+x, (vy*scale)+y);
+            _text_goto(mode, (vx*scale)+x + slant*vy, (vy*scale)+y);
             pen_down();
         }
     }
@@ -55,16 +63,21 @@ function draw_char(code, x,y, scale) {
     return width * scale;
 }
 
-function draw_string(x,y, scale, spacing) {
+function draw_string(x,y, scale, spacing, mode, slant) {
     let preserve_costume = get_active_costume();
     let ix = x;
     let n = 0;
     repeat(char_codes.length()) {
-        ix += draw_char(char_codes.item(n), ix, y, scale) * spacing;
+        ix += draw_char(char_codes.item(n), ix, y, scale, mode, slant) * spacing;
         n += 1;
     }
     set_costume(preserve_costume);
     return ix-x;
+}
+
+function string_width(str, size, spacing) {
+    let scale = size/LINE_HEIGHT;
+    return load_string(str) * scale * spacing;
 }
 
 const CENTER = 0.5;
@@ -73,8 +86,34 @@ const BOTTOM = 0;
 const TOP = 1;
 const RIGHT = 1;
 
-function draw(str, x, y, anchor_x, anchor_y, size, spacing) {
+enum edges {
+    SHARP,
+    SOFT,
+}
+
+function styled(
+    str,
+    x,y,
+    anchor_x, anchor_y,
+    size, spacing, edges, slant
+) {
     let scale = size/LINE_HEIGHT;
     let width = load_string(str) * scale * spacing;
-    return draw_string(x - (width * anchor_x), y - (size * anchor_y), scale, spacing);
+    return draw_string(x - (width * anchor_x), y - (size * anchor_y), scale, spacing, edges, slant);
+}
+
+function draw(str, x, y, anchor_x, anchor_y, size, spacing) {
+    return styled(str, x,y, anchor_x, anchor_y, size, spacing, edges.SHARP, 0);
+}
+
+function regular(str, x,y, size) {
+    return styled(str, x,y, CENTER, CENTER, size, 1, edges.SHARP, 0);
+}
+
+function italic(str, x,y, size) {
+    return styled(str, x,y, CENTER, CENTER, size, 1, edges.SHARP, 0.1);
+}
+
+function soft(str, x,y, size) {
+    return styled(str, x,y, CENTER, CENTER, size, 1, edges.SOFT, 0);
 }
