@@ -238,9 +238,15 @@ async function target_html(file, sb3, options) {
     packager.options.app.packageName = outname;
     packager.options.app.windowTitle = outname;
     const result = await packager.package();
-    fs.writeFileSync(outfile, result.data);
-    console.log(' - html -> ', outfile);
-    return outfile;
+    try {
+        fs.writeFileSync(outfile, result.data);
+        console.log(' - html -> ', outfile);
+        return outfile;
+    } catch(err) {
+        console.log(' - html -> ERROR');
+        console.error(err);
+        return undefined;
+    }
 }
 
 async function build(file, options) {
@@ -307,7 +313,6 @@ program.command('watch')
 
             let lastupdate = Date.now();
             let watch_threshold = 500;
-            let max_watch_threshold = 5000;
             file.watch_dir(['.sb3', '.json', '.html', '.blocks.json', '.blocks.json'], async (changed_file, stats) => {
                 lastupdate = Date.now();
             });
@@ -322,7 +327,6 @@ program.command('watch')
                         let compile_start = Date.now();
                         await configure(file, options);
                         const compile_time = Date.now() - compile_start;
-                        watch_threshold = Math.min(Math.max(watch_threshold, compile_time/2), max_watch_threshold);
                     } catch (err) {
                         console.error(err);
                     }
