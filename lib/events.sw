@@ -15,3 +15,7 @@ let mouse_delta_y = 0;
 function consume_click() {
     click = false;
 }
+
+function consume_key_press(key) {
+    keys_pressed.delete(keys_pressed.indexof(key));
+}

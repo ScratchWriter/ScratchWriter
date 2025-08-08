@@ -21,6 +21,7 @@ function frame(delta_time, events) {
     // - mouse_delta_y
     // functions
     // - consume_click()
+    // - consume_key_press(key)
 }
 
 window.start(frame);
