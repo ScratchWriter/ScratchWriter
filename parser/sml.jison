@@ -55,6 +55,9 @@
 "void"                          return 'VOID';
 "function"                      return 'FUNCTION';
 "no_refresh"                    return 'NO_REFRESH';
+"as_clone"                      return 'AS_CLONE';
+"when_broadcast"                return 'WHEN_BROADCAST';
+"global"                        return 'GLOBAL';
 "return"                        return 'RETURN';
 "true"                          return 'TRUE';
 "false"                         return 'FALSE';
@@ -159,6 +162,20 @@ statement
                 $$ = (ctx) => yy.generators.no_refresh_block(yy, ctx, ctx.at(yyat), $block);
             }
         }
+    | AS_CLONE block
+        {
+            {
+                const yyat = @$;
+                $$ = (ctx) => yy.generators.as_clone_block(yy, ctx, ctx.at(yyat), $block);
+            }
+        }
+    | WHEN_BROADCAST expression block
+        {
+            {
+                const yyat = @$;
+                $$ = (ctx) => yy.generators.broadcast_recived_block(yy, ctx, ctx.at(yyat), $expression, $block);
+            }
+        }
     | IMPORT string_literal AS IDENTIFIER ';'
         {
             {
@@ -191,7 +208,14 @@ statement
         {
             {
                 const yyat = @$;
-                $$ = (ctx) => yy.generators.array_initializer(yy, ctx.at(yyat), ctx.scope, $IDENTIFIER, $array_initializer(ctx));
+                $$ = (ctx) => yy.generators.array_initializer(yy, ctx.at(yyat), ctx.scope, $IDENTIFIER, $array_initializer(ctx), false);
+            }
+        }
+    | GLOBAL IDENTIFIER '=' array_initializer ';'
+        {
+            {
+                const yyat = @$;
+                $$ = (ctx) => yy.generators.array_initializer(yy, ctx.at(yyat), ctx.scope, $IDENTIFIER, $array_initializer(ctx), true);
             }
         }
     | ENUM IDENTIFIER '{' $property_list '}'
@@ -205,14 +229,28 @@ statement
         {
             {
                 const yyat = @$;
-                $$ = (ctx) => yy.generators.declare_statement(yy, ctx.at(yyat), ctx.scope, $IDENTIFIER, null);
+                $$ = (ctx) => yy.generators.declare_statement(yy, ctx.at(yyat), ctx.scope, $IDENTIFIER, null, false);
             }
         }
     | LET IDENTIFIER '=' expression ';'
         {
             {
                 const yyat = @$;
-                $$ = (ctx) => yy.generators.declare_statement(yy, ctx.at(yyat), ctx.scope, $IDENTIFIER, $expression(ctx));
+                $$ = (ctx) => yy.generators.declare_statement(yy, ctx.at(yyat), ctx.scope, $IDENTIFIER, $expression(ctx), false);
+            }
+        }
+    | GLOBAL IDENTIFIER ';'
+        {
+            {
+                const yyat = @$;
+                $$ = (ctx) => yy.generators.declare_statement(yy, ctx.at(yyat), ctx.scope, $IDENTIFIER, null, true);
+            }
+        }
+    | GLOBAL IDENTIFIER '=' expression ';'
+        {
+            {
+                const yyat = @$;
+                $$ = (ctx) => yy.generators.declare_statement(yy, ctx.at(yyat), ctx.scope, $IDENTIFIER, $expression(ctx), true);
             }
         }
     | array_index '=' expression ';'

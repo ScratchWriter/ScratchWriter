@@ -84,18 +84,14 @@ class Compiler {
         this.operators = operators;
         builtins(this.yy);
 
-        this.body = this.stackblock(
-            {
-                opcode: "event_whenflagclicked",
-                topLevel: true,
-            },
-            {anonymous: true}
-        );
-
-        // define
-        this.def_const("__PAGE_SIZE__", this.options.page_size);
-        this.def_const("__STACK_PAGES__", this.options.stack_pages);
-        this.def_const("__HEAP_PAGES__", this.options.head_pages);
+        this.body = this.script([
+            this.stackblock({
+                    opcode: "event_whenflagclicked",
+                    topLevel: true,
+                },
+                {anonymous: true}
+            ),
+        ]);
     }
 
     def_const(identifier, value) {
@@ -300,13 +296,13 @@ class Compiler {
     }
 
     // list declaration statement
-    list(scope, identifier, at) {
+    list(scope, identifier, at, stage=false) {
         if (scope.lookup(identifier)) {
             throw new CompileError(`${identifier} is already defined`, at);
         }
 
         const unique_name = this.get_unique_name(scope, identifier);
-        const node = this.create_list(unique_name);
+        const node = this.create_list(unique_name, stage);
         const listfield = node.unwrap_field().unwrap_unsafe();
         scope.define(identifier, node);
 
@@ -332,8 +328,11 @@ class Compiler {
         });
     }
 
-    create_list(unique_name) {
-        const list = this.program.list(unique_name);
+    create_list(unique_name, stage=false) {
+        const list = stage
+            ? this.program.stage_list(unique_name)
+            : this.program.list(unique_name)
+            ;
         const namespace = new Namespace(this.get_namespace_name(unique_name));
 
         const listfield = this.to_field(list);
@@ -539,12 +538,15 @@ class Compiler {
         });
     }
 
-    declare_var_statement(scope, identifier, value, at) {
+    declare_var_statement(scope, identifier, value, at, stage = false) {
         if (scope.lookup(identifier)) {
             throw new CompileError(`${identifier} is already defined`, at);
         }
         
-        const variable = this.program.variable(this.get_unique_name(scope, identifier));
+        const variable = stage
+            ? this.program.stage_variable(this.get_unique_name(scope, identifier))
+            : this.program.variable(this.get_unique_name(scope, identifier))
+            ;
         const expression = new Expression(variable);
         const field = new FieldExpression(this.to_field(variable));
         scope.define(identifier, new ParseNode({
@@ -628,12 +630,22 @@ class Compiler {
         return this.sidechain_inputs(result, args);
     }
 
-    // function call expression
-    function_call_expression(accessorarg, args, at) {
-        const accessor = accessorarg.unwrap_accessor().unwrap_unsafe();
-        const value = accessor.unwrap(at).unwrap_macro().error((err)=>{
+    unwrap_accessor_callable(node, at) {
+        if (!node.to_accessor)
+            throw new CompileError(`expression is not callable`, at);
+        return node.unwrap_accessor().unwrap_unsafe();
+    }
+
+    unwrap_callable(accessor, at) {
+        return accessor.unwrap(at).unwrap_macro().error((err)=>{
             throw new CompileError(`${accessor.identifier} is not callable`, at);
         }).unwrap_unsafe();
+    }
+
+    // function call expression
+    function_call_expression(accessorarg, args, at) {
+        const accessor = this.unwrap_accessor_callable(accessorarg, at);
+        const value = this.unwrap_callable(accessor, at);
         if (!value.generate_blocks) {
             throw new CompileError(`${accessor.identifier} is not callable`, at);
         }
@@ -652,6 +664,9 @@ class Compiler {
         const cache = this.proc_cache;
         const scope = ctx.scope;
         const base_id = identifier? this.get_unique_name(scope, identifier) : 'anonymous';
+        const namespace = new Namespace(base_id);
+        namespace.define('name', this.expression(this.program.string(identifier??'anonymous')));
+        namespace.define('_', this.expression(this.program.string(base_id)));
 
         const arg_info = (value, name) => {
             if (value.has_expression()) return {
@@ -692,6 +707,7 @@ class Compiler {
             const subctx = ctx.sub((identifier) + suffix, {
                 return_register,
             });
+            subctx.scope.define("__proccode__", this.expression(this.program.string(proc.proccode)));
 
             for (const arg of args) {
                 if (arg.dynamic) {
@@ -710,6 +726,7 @@ class Compiler {
                 proc.getContext().connect_next(blocks);
             }
             proc.returns = return_register.return_counter > 0;
+
             return proc;
         }
 
@@ -741,9 +758,15 @@ class Compiler {
             }
         });
 
-        scope.define(identifier, macro, at);
+        const result = new ParseNode({
+            yy: this.yy,
+            to_namespace: () => namespace,
+            to_macro: () => macro.unwrap_macro(),
+        });
 
-        return macro;
+        scope.define(identifier, result, at);
+
+        return result;
     }
 
     no_refresh_block(ctx, gen_blocks, at) {
@@ -753,6 +776,37 @@ class Compiler {
             proc.getContext().connect_next(blocks);
         }
         return this.statement(proc.unlinked_call([]), at);
+    }
+
+    as_clone_block(ctx, gen_blocks, at) {
+        const blocks = gen_blocks(ctx).statements_unsafe().head;
+        const clone_ctx = this.program.getContext();
+        clone_ctx.next({
+            opcode: "control_start_as_clone",
+            topLevel: true,
+        });
+        clone_ctx.connect_next(blocks);
+        return this.voidblock();
+    }
+
+    broadcast_recived_block(ctx, expression, gen_blocks, at) {
+        const invalid = () => {
+            throw new CompileError(`Broadcast message must be a string.`, at);
+        };
+        const value = expression(ctx).unwrap_expression().error(invalid).unwrap_unsafe().id;
+        if (!(Array.isArray(value) && value[0] == 10)) {
+            invalid();
+        }
+        const broadcast_symbol = this.program.broadcast(value[1]);
+        const blocks = gen_blocks(ctx).statements_unsafe().head;
+        const broadcast_ctx = this.program.getContext();
+        broadcast_ctx.next({
+            opcode: "event_whenbroadcastreceived",
+            fields: {BROADCAST_OPTION: this.to_field(broadcast_symbol)},
+            topLevel: true,
+        });
+        broadcast_ctx.connect_next(blocks);
+        return this.voidblock();
     }
 
     module_wrap(name, block, at) {
@@ -925,6 +979,14 @@ class Compiler {
             statements.unshift(this.merge_statements(a,b));
         }
         return statements[0];
+    }
+
+    script(stackblocks) {
+        return this.node(
+            this.merge_statements_list(
+                stackblocks.map(stackblock=>stackblock.statements_unsafe())
+            )
+        );
     }
 
     // some "hybrid" nodes will write a stackblock and return a reporter

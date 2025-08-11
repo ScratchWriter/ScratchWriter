@@ -351,6 +351,7 @@ class Procedure {
 class Program {
     constructor() {
         this.blockwriter = new BlockWriter();
+        this.stage_blockwriter = new BlockWriter();
         this.procedures = {};
     }
 
@@ -413,8 +414,20 @@ class Program {
         return this.blockwriter.variablemanager.variable(name);
     }
 
+    stage_variable(name) {
+        return this.stage_blockwriter.variablemanager.variable(name);
+    }
+
     list(name) {
         return this.blockwriter.variablemanager.list(name);
+    }
+
+    stage_list(name) {
+        return this.stage_blockwriter.list(name);
+    }
+
+    broadcast(message) {
+        return this.stage_blockwriter.variablemanager.broadcast(message);
     }
 
     symbol(name) {
@@ -542,11 +555,17 @@ class Program {
         const file = zip.file('project.json');
         const data = JSON.parse(await file.async('string'));
         data.meta.agent = `${meta.name}/${meta.version}`;
-        const sprite = locateTarget(data);
-        Object.assign(sprite.blocks, this.blockwriter.blocks);
-        this.blockwriter.variablemanager.inject(sprite);
-        this.blockwriter.assetmanager.inject(sprite);
-        this.blockwriter.assetmanager.write(zip);
+
+        async function injectSprite(target, blockwriter) {
+            Object.assign(target.blocks, blockwriter.blocks);
+            await blockwriter.variablemanager.inject(target);
+            await blockwriter.assetmanager.inject(target);
+            await blockwriter.assetmanager.write(zip);
+        }
+
+        await injectSprite(locateTarget(data, false), this.blockwriter);
+        await injectSprite(locateTarget(data, true), this.stage_blockwriter);
+
         zip.file('project.json', JSON.stringify(data));
     }
 

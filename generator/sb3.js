@@ -51,10 +51,10 @@ async function readBlocks(zip) {
     return blocks;
 }
 
-function locateTarget(data) {
+function locateTarget(data, isStage = false) {
     const targets = data.targets;
     for (const target of targets) {
-        if (target.isStage === false) return target;
+        if (target.isStage === isStage) return target;
     }
     throw new Error(`Unable to locate target sprite.`);
 }

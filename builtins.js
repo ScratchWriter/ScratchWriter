@@ -46,13 +46,19 @@ const operators = {
             NUM2: inp(rhs),
         },
     }),
-    strjoin: (yy, [lhs, rhs]) => yy.compiler.reporter({
-        opcode: "operator_join",
-        inputs: {
-            STRING1: inp(lhs),
-            STRING2: inp(rhs),
-        },
-    }),
+    strjoin: (yy, ops) => {
+        const [lhs, rhs] = ops;
+        if (ops.every(x => Array.isArray(x) && x[0] == 10))
+            return yy.compiler.expression(yy.program.string(String(lhs[1])+String(rhs[1])));
+        else
+            return yy.compiler.reporter({
+                opcode: "operator_join",
+                inputs: {
+                    STRING1: inp(lhs),
+                    STRING2: inp(rhs),
+                },
+            });
+    },
     eq: (yy, [lhs, rhs]) => yy.compiler.reporter({
         opcode: "operator_equals",
         inputs: {
@@ -390,7 +396,12 @@ function builtins(yy) {
         (yy, [sound]) => yy.compiler.stackblock({
             opcode: "sound_play",
             inputs: {
-                SOUND_MENU: inp(sound),
+                SOUND_MENU: inp(sound, yy.program.unlinked_block({
+                    opcode: "sound_sounds_menu",
+                    fields: {"SOUND_MENU": ["",null]},
+                    shadow: true,
+                    topLevel: true,
+                }), true),
             },
         })
     ));
@@ -400,7 +411,12 @@ function builtins(yy) {
         (yy, [sound]) => yy.compiler.stackblock({
             opcode: "sound_playuntildone",
             inputs: {
-                SOUND_MENU: inp(sound),
+                SOUND_MENU: inp(sound, yy.program.unlinked_block({
+                    opcode: "sound_sounds_menu",
+                    fields: {"SOUND_MENU": ["",null]},
+                    shadow: true,
+                    topLevel: true,
+                }), true),
             },
         })
     ));
@@ -420,7 +436,7 @@ function builtins(yy) {
         (yy, [pitch]) => yy.compiler.stackblock({
             opcode: "sound_seteffectto",
             inputs: {
-                VALUE: inp(pitch),
+                VALUE: inp(pitch, [4, "100"]),
             },
             fields: {
                 EFFECT: ["PITCH", null],
@@ -433,7 +449,7 @@ function builtins(yy) {
         (yy, [pan]) => yy.compiler.stackblock({
             opcode: "sound_seteffectto",
             inputs: {
-                VALUE: inp(pan),
+                VALUE: inp(pan, [4, "100"]),
             },
             fields: {
                 EFFECT: ["PAN", null],
@@ -452,6 +468,13 @@ function builtins(yy) {
         [],
         (yy, []) => yy.compiler.stackblock({
             opcode: "sound_cleareffects",
+        })
+    ));
+
+    yy.compiler.global.define('stop_all_sounds', yy.compiler.macro(
+        [],
+        (yy, []) => yy.compiler.stackblock({
+            opcode: "sound_stopallsounds",
         })
     ));
 
@@ -476,6 +499,56 @@ function builtins(yy) {
         })
     ));
 
+    yy.compiler.global.define('clone', yy.compiler.macro(
+        [],
+        (yy, []) => yy.compiler.stackblock({
+            opcode: "control_create_clone_of",
+            inputs: {
+                CLONE_OPTION: inp(yy.compiler.program.unlinked_block({
+                    opcode: "control_create_clone_of_menu",
+                    "fields": {
+                        CLONE_OPTION: [
+                            "_myself_",
+                            null
+                        ]
+                    }
+                }), null),
+            },
+        })
+    ));
+
+    yy.compiler.global.define('delete_clone', yy.compiler.macro(
+        [],
+        (yy, []) => yy.compiler.stackblock({
+            opcode: "control_delete_this_clone",
+        })
+    ));
+
+    // events
+    function broadcastHelper(opcode, message) {
+        const makeblock = (inparg) => yy.compiler.stackblock({
+            opcode: opcode,
+            inputs: {
+                BROADCAST_INPUT: inparg,
+            },
+        });
+        if (Array.isArray(message) && message[0] == 11)
+            return makeblock(inp(message));
+        if (Array.isArray(message) && !(message[0] == 12 || message[0] == 13))
+            return makeblock(inp(yy.program.broadcast(String(message[1]))));
+        return makeblock(inp(message, yy.program.broadcast('default')));
+    }
+
+    yy.compiler.global.define('broadcast', yy.compiler.macro(
+        ["message"],
+        (yy, [message]) => broadcastHelper("event_broadcast", message),
+    ));
+
+    yy.compiler.global.define('broadcast_wait', yy.compiler.macro(
+        ["message"],
+        (yy, [message]) => broadcastHelper("event_broadcastandwait", message),
+    ));
+    
     // sensing
     yy.compiler.global.define('disable_drag', yy.compiler.macro(
         [],

@@ -46,6 +46,8 @@ class AssetManager {
         this.sounds = [];
 
         this.files = {};
+
+        this.pending = new Set();
     }
 
     is_asset(filename) {
@@ -82,6 +84,7 @@ class AssetManager {
         const descriptor = AssetManager.get_base_descriptor(handle, hash(data), pathparts);
         this.files[descriptor.md5ext] = data;
         this.costumes.push(descriptor);
+        // this.job(...promise) can be used for async loading
         return handle;
     }
 
@@ -90,10 +93,23 @@ class AssetManager {
         const descriptor = AssetManager.get_base_descriptor(handle, hash(data), pathparts);
         this.files[descriptor.md5ext] = data;
         this.sounds.push(descriptor);
+        // this.job(...promise) can be used for async loading
         return handle;
     }
 
-    inject(target) {
+    job(promise) {
+        const self = this;
+        self.pending.add(promise);
+        promise.finally(() => self.pending.delete(promise));
+        return promise;
+    }
+
+    async waitForAllJobs() {
+        await Promise.all(Array.from(this.pending));
+    }
+
+    async inject(target) {
+        await this.waitForAllJobs();
         target.costumes = [
             ...target.costumes,
             ...this.costumes,
@@ -104,7 +120,8 @@ class AssetManager {
         ];
     }
 
-    write(zip) {
+    async write(zip) {
+        await this.waitForAllJobs();
         for (const [file, data] of Object.entries(this.files)) {
             zip.file(file, data);
         }

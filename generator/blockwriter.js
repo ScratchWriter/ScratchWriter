@@ -22,7 +22,7 @@ function inp_shadow(x, shadow) {
 
 function inp(x, shadow = [10, ""]) {
     if (Array.isArray(x)) {
-        if (x[0] === 12 || x[0] == 13) {
+        if (x[0] === 12 || x[0] === 13) {
             return inp_shadow(x, shadow);
         } else {
             return [1, x];

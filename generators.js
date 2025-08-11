@@ -109,6 +109,14 @@ module.exports = {
         return yy.compiler.no_refresh_block(ctx, gen_block, at);
     },
 
+    as_clone_block(yy, ctx, at, gen_block) {
+        return yy.compiler.as_clone_block(ctx, gen_block, at);
+    },
+
+    broadcast_recived_block(yy, ctx, at, expression, gen_block) {
+        return yy.compiler.broadcast_recived_block(ctx, expression, gen_block, at);
+    },
+
     import_statement(yy, at, scope, str, identifier) {
         yy.compiler.import(scope, str, identifier);
         return yy.compiler.voidblock(at);
@@ -144,17 +152,18 @@ module.exports = {
         return yy.compiler.voidblock(at);
     },
 
-    list_statement(yy, at, scope, identifier) {
-        return yy.compiler.list(scope, identifier);
+    list_statement(yy, at, scope, identifier, stage=false) {
+        return yy.compiler.list(scope, identifier, stage);
     },
 
-    declare_statement(yy, at, scope, identifier, expression) {
+    declare_statement(yy, at, scope, identifier, expression, global=false) {
         return yy.compiler.sidechain_inputs(
             yy.compiler.declare_var_statement(
                 scope,
                 identifier,
                 expression ? expression.expressions_unsafe().id : null,
                 at,
+                global,
             ),
             expression ? [expression] : [],
         );

@@ -3,6 +3,7 @@ class VariableManager {
         this.variables = {};
         this.lists = {};
         this.constants = {};
+        this.broadcasts = {};
         this.symbols = {};
     }
 
@@ -37,6 +38,15 @@ class VariableManager {
         return block;
     }
 
+    broadcast(message) {
+        if (message in this.broadcasts) return this.symbols[message];
+        if (message in this.symbols) throw new Error(`Symbol ${message} already used.`);
+        this.broadcasts[message] = message;
+        const block = [11, message, message];
+        this.symbols[message] = block;
+        return block;
+    }
+
     to_field(arr) {
         return [arr[1], arr[2]];
     }
@@ -44,6 +54,7 @@ class VariableManager {
     inject(target) {
         Object.assign(target.variables, this.variables);
         Object.assign(target.lists, this.lists);
+        Object.assign(target.broadcasts, this.broadcasts);
     }
 }
 
