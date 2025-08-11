@@ -4,15 +4,14 @@ const path  = require('path');
 const fs = require('fs');
 const { program } = require('commander');
 const _chalk = import("chalk").then(m=>m.default);
-const { FileError, CompileError } = require('./errors');
+const { FileError, CompileError, catch_compiler_errors } = require('./src/errors');
 
 const app_dir = path.dirname(require.main.filename);
 const libpaths = [path.resolve(app_dir, './lib')];
 
-const Compiler = require('./compiler');
-const { Program, readProject, readBlocks, convertBlocks, saveFile } = require('./generator');
-const { FileLoader, FileType } = require('./file_loader');
-const { catch_compiler_errors } = require('./errors');
+const Compiler = require('./src/compiler');
+const { Program, readProject, readBlocks, convertBlocks, saveFile } = require('./src/generator');
+const { FileLoader, FileType } = require('./src/file_loader');
 
 const loader = new FileLoader(
     [FileType.SW, FileType.SB3, FileType.JSON, FileType.YAML],

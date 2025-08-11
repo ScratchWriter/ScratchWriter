@@ -8,8 +8,8 @@
   },
   "scripts": {
     "dev": "npm run build && node main.js build --debug --target-sb3-json --target-blocks",
-    "build": "npm run buildparser && node font/gen_font.js",
-    "buildparser": "jison parser/sml.jison -o parser/sml.js",
+    "build": "npm run buildparser && node scripts/font/gen_font.js",
+    "buildparser": "jison src/parser/sml.jison -o src/parser/sml.js",
     "test": "npx jest"
   },
   "repository": {

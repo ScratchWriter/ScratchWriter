@@ -2,9 +2,9 @@ const fs = require('fs');
 const path = require('path');
 
 const STRIDE = 112;
-const FONT_DATA_FILE = '../font/font.csv';
-const FONT_SCRIPT_FILE = '../font/script.sw';
-const OUT_FILE = '../lib/font.sw';
+const FONT_DATA_FILE = './font.csv';
+const FONT_SCRIPT_FILE = './script.sw';
+const OUT_FILE = '../../lib/font.sw';
 const ORDER = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[±]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 const INDICES = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789:;<=>?@!\"#$%&'()*+,-./[±]^_`{|}~";
 

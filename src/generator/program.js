@@ -1,5 +1,5 @@
 const _ = require("lodash");
-const meta = require('../package.json');
+const meta = require('../../package.json');
 const fs = require('fs');
 
 const {
