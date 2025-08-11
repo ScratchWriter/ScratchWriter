@@ -1,7 +1,7 @@
 import "error" as error;
 import "runtime" as runtime;
 
-const DEFAULT_START_SIZE = 1;
+const DEFAULT_START_SIZE = 8;
 
 enum vec {
     data,

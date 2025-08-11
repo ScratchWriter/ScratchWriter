@@ -1,11 +1,11 @@
 import "error" as error;
 import "math" as math;
 
-const block_ptr = [];
-const block_end = [];
-const block_size = [];
-const block_free = [];
-const free_blocks = [];
+global block_ptr = [];
+global block_end = [];
+global block_size = [];
+global block_free = [];
+global free_blocks = [];
 
 function reset() {
     block_ptr.reset();

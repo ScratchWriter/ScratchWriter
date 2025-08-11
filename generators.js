@@ -260,9 +260,9 @@ module.exports = {
         return yy.compiler.expression(expression, at);
     },
 
-    array_initializer(yy, at, scope, identifier, array_initializer) {
+    array_initializer(yy, at, scope, identifier, array_initializer, stage=false) {
         const values = array_initializer.map(x=>x.expressions_unsafe().id);
-        const list = yy.compiler.list(scope, identifier, at);
+        const list = yy.compiler.list(scope, identifier, at, stage);
         const node = yy.compiler.initalize_list(list, values, at);
         return yy.compiler.sidechain_inputs(node, array_initializer);
     },

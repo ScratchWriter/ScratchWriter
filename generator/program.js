@@ -423,7 +423,7 @@ class Program {
     }
 
     stage_list(name) {
-        return this.stage_blockwriter.list(name);
+        return this.stage_blockwriter.variablemanager.list(name);
     }
 
     broadcast(message) {

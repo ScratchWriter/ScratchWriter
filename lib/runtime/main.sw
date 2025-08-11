@@ -4,8 +4,8 @@ import "error" as error;
 import "string" as string;
 import "console" as console;
 
-const memory = [];
-let heap_ptr = 0;
+global memory = [];
+global heap_ptr = 0;
 
 function get_page(size) {
     let ptr = memory.length();
@@ -105,7 +105,7 @@ function clone(src) {
     return ptr;
 }
 
-let __heap_size = 0;
+global __heap_size = 0;
 
 function configure(heap_size) {
     __heap_size = heap_size;
