@@ -13,6 +13,7 @@ window.MAX_Y;
 
 function frame(delta_time, events) {
     // see "events" module
+    window.exit();
 }
 
 // window.double_buffer = false

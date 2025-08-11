@@ -22,11 +22,17 @@ function is_visable(x,y, size) {
 }
 
 let double_buffer = true;
+let flag_exit = false;
+
+function exit() {
+    flag_exit = true;
+}
 
 function start(frame) {
     let frame_end = timer();
     let frame_start = timer();
     let delta_time = 0;
+    input.reset();
     forever {
         if (double_buffer) {
             no_refresh {
@@ -42,6 +48,10 @@ function start(frame) {
                 input.update();
             }
             frame(0, events);
+        }
+        if (flag_exit) {
+            flag_exit = false;
+            return;
         }
     }
 }

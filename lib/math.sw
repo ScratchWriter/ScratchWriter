@@ -68,6 +68,10 @@ function round_to_places(x, places) {
     return round(x*shift)/shift;
 }
 
+function atan2(x,y) {
+    atan(y/(x+0))+(180*(x<0));
+}
+
 function rotate_x1(x1, x2, deg) {
     return x1*cos(deg) - x2*sin(deg);
 }

@@ -25,9 +25,16 @@ const keys_last = [];
 repeat(keys.length()) {
     keys_last.push("false");
 }
+
 let mouse_last = false;
 let mouse_last_x = 0;
 let mouse_last_y = 0;
+
+function reset() {
+    mouse_last = get_mouse_down();
+    mouse_last_x = 0;
+    mouse_last_y = 0;
+}
 
 function update() {
     events.keys_pressed.reset();
@@ -68,7 +75,7 @@ function update() {
             events.mouse_released = true;
         }
     }
-    mouse_last = get_mouse_down();
+    mouse_last = events.mouse_down;
     
     events.mouse_x = get_mouse_x();
     events.mouse_y = get_mouse_y();

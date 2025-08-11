@@ -16,6 +16,7 @@ let c = math.hypot(a,b);
 let d = math.hypot3(a,b,c);
 let rad = math.to_rad(deg);
 let deg = math.to_deg(rad);
+let angle = math.atan2(x,y);
 let bool = math.is_finite(math.INFINITY); // false
 let bool = math.is_number(1); // true
 let num = math.round_to_places(math.PI, 2); // 3.14

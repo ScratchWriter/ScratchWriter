@@ -25,10 +25,13 @@ gfx.fill_cols(y1, y2);
 
 // outlines a rectangle
 gfx.outline_rect(x1, x2, y1, y2);
+
 // efficiently fills a rectangle
-gfx.fill_rect(x1, x2, y1, y2);
-// alternative call for fill_rect
 gfx.fill_rect_at(x, y, width, height);
+gfx.fill_rect_rounded_at(x, y, width, height, radius);
+// the same as fill_rect_at
+gfx.fill_rect(x1, x2, y1, y2);
+gfx.fill_rect_rounded(x1, x2, y1, y2, radius);
 
 // efficiently fills a triangle (where res = the pen size)
 gfx.fill_triangle(ax, ay, bx, by, cx, cy, res);

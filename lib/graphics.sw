@@ -98,7 +98,7 @@ function outline_rect(x1, x2, y1, y2) {
     goto(x1, y1);
 }
 
-function fill_rect(x1, x2, y1, y2) {
+function fill_rect_rounded(x1, x2, y1, y2, radius) {
     pen_up();
 
     let min_x;
@@ -107,56 +107,71 @@ function fill_rect(x1, x2, y1, y2) {
     let max_y;
 
     if (x1 < x2) {
-        min_x = x1;
-        max_x = x2;
+        min_x = round(x1);
+        max_x = round(x2);
     } else {
-        min_x = x2;
-        max_x = x1;
+        min_x = round(x2);
+        max_x = round(x1);
     }
 
     if (y1 < y2) {
-        min_y = y1;
-        max_y = y2;
+        min_y = round(y1);
+        max_y = round(y2);
     } else {
-        min_y = y2;
-        max_y = y1;
+        min_y = round(y2);
+        max_y = round(y1);
     }
 
-    let dx = max_x - min_x;
-    let dy = max_y - min_y;
-    let cx = (x1+x2)/2;
-    let cy = (y1+y2)/2;
+    let dx = round(abs(x2 - x1));
+    let dy = round(abs(y2 - y1));
+    let cx = round((x1+x2)/2);
+    let cy = round((y1+y2)/2);
     
     let r;
     if (dx < dy) {
-        r = dx/2;
-        set_pen_size(dx);
+        r = floor(dx/4);
+        set_pen_size(r*2);
         goto(cx, min_y+r);
         pen_down();
         set_y(max_y-r);
     } else {
-        r = dy/2;
-        set_pen_size(dy);
-        goto(min_x+r, cy);
+        r = floor(dy/2);
+        set_pen_size(r*2);
+        goto((min_x+r), cy);
         pen_down();
         set_x(max_x-r);
     }
 
-    until (r < 1) {
-        set_pen_size(r/2);
-        r = r/4;
+    repeat(40) {
+        pen_up();
+        set_pen_size(r*2);
         goto(max_x - r, max_y - r);
+        pen_down();
         goto(min_x + r, max_y - r);
         goto(min_x + r, min_y + r);
         goto(max_x - r, min_y + r);
         goto(max_x - r, max_y - r);
+        r = r/4;
+        if (r*2 >= radius) {
+            r = ceil(r);
+        } else {
+            return;
+        }
     }
 }
 
+function fill_rect(x,y,w,h){
+    fill_rect_rounded(x,y,w,h,1);
+}
+
 function fill_rect_at(x,y, w,h) {
+    fill_rect_rounded_at(x,y,w,h,1);
+}
+
+function fill_rect_rounded_at(x,y,w,h, radius) {
     let w2 = w/2;
     let h2 = h/2;
-    fill_rect(x-w2, x+w2, y-h2, y+h2);
+    fill_rect_rounded(x-w2, x+w2, y-h2, y+h2, radius);
 }
 
 // adapted from https://scratch.mit.edu/projects/24828481
