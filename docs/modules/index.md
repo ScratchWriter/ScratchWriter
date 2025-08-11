@@ -23,6 +23,7 @@
 - [Linked](./linked.md)
 - [Events](./events.md)
 - [Vector](./vector.md)
+- [Worker](./worker.md)
 
 # Importing
 ```js
