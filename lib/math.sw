@@ -69,7 +69,7 @@ function round_to_places(x, places) {
 }
 
 function atan2(x,y) {
-    atan(y/(x+0))+(180*(x<0));
+    return atan(y/(x+0))+(180*(x<0));
 }
 
 function rotate_x1(x1, x2, deg) {
