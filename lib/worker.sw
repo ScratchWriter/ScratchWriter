@@ -1,6 +1,10 @@
 let worker = null;
 let handler = null;
 
+function is_main() {
+    return worker == null;
+}
+
 function spawn_as(callback, id) {
     as_clone {
         if (handler == callback._) {
