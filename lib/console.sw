@@ -3,15 +3,15 @@ import "window" as window;
 import "graphics" as gfx;
 import "color" as color;
 
-const console = [];
+global console = [];
 
-let lines = 12;
-let padding = 12;
-let font_size = 12;
-let line_height = 22;
-let font_weight = 1;
-let text_color = color.rgb(255,255,255);
-let background_color = color.rgb(4,16,32);
+global lines = 12;
+global padding = 12;
+global font_size = 12;
+global line_height = 22;
+global font_weight = 1;
+global text_color = color.rgb(255,255,255);
+global background_color = color.rgb(4,16,32);
 
 function configure(linecount) {
     lines = linecount;

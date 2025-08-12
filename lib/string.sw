@@ -7,6 +7,7 @@ function split(str, delim, into) {
             into.push(letterof(n, str));
             n += 1;
         }
+        return;
     }
 
     repeat (len(str)) {
