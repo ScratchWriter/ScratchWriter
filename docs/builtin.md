@@ -79,6 +79,7 @@ m = round(n);
 random = randint(from, to);
 n = len(string);
 bool = str_contains(str, substr);
+substr = letterof(index, str);
 ```
 
 Pen
