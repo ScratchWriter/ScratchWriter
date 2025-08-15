@@ -21,27 +21,22 @@ function is_visable(x,y, size) {
     );
 }
 
-let double_buffer = true;
-let flag_exit = false;
+global double_buffer = true;
+global flag_exit = false;
 
 function exit() {
     flag_exit = true;
 }
 
 function start(frame) {
-    let frame_end = timer();
-    let frame_start = timer();
-    let delta_time = 0;
+    let last = timer();
     input.reset();
     forever {
         if (double_buffer) {
             no_refresh {
-                frame_end = timer();
-                delta_time = frame_end - frame_start;
-                frame_start = frame_end;
-
                 input.update();
-                frame(delta_time, events);
+                frame(timer() - last, events);
+                last = timer();
             }
         } else {
             no_refresh {
