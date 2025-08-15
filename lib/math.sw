@@ -68,7 +68,7 @@ function round_to_places(x, places) {
     return round(x*shift)/shift;
 }
 
-function atan2(x,y) {
+function atan2(y,x) {
     return atan(y/(x+0))+(180*(x<0));
 }
 
