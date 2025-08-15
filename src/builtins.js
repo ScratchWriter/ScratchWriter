@@ -155,7 +155,7 @@ function builtins(yy) {
     yy.compiler.global.define('set_angle', yy.compiler.macro(
         [Macro.arg('deg')],
         (yy, [deg]) => yy.compiler.stackblock({
-            opcode: "",
+            opcode: "motion_pointindirection",
             inputs: {
                 DIRECTION: inp(deg),
             },
