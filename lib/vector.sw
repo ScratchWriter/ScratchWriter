@@ -68,10 +68,18 @@ function pop(ptr) {
 }
 
 function item(ptr, n) {
-    if (n >= runtime.memory[ptr + vec.len]) {
+    if (n >= runtime.memory[ptr + vec.len] || n < 0) {
         error.crash("Index out of bounds", @);
     }
     return runtime.memory[runtime.memory[ptr + vec.data] + n];
+}
+
+function set(ptr, n, value) {
+    if (n >= runtime.memory[ptr + vec.len] || n < 0) {
+        error.crash("Index out of bounds", @);
+    }
+    runtime.memory[runtime.memory[ptr + vec.data] + n] = value;
+    return value;
 }
 
 function delete(ptr, n) {
