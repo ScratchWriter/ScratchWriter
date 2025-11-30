@@ -16,7 +16,7 @@
 - **[Quick Start Guide](./docs/quick_start.md)**
   - **[Hello Scratch](./docs/examples/hello_scratch.md)**
   - **[Examples](https://github.com/ScratchWriter/sw_examples/tree/main)**
-- **[Installing](#installing)**
+- **[Installing](#%EF%B8%8F-installing)**
 - **[Syntax](./docs/syntax.md)**
   - **[Variables & Lists](./docs/syntax.md/#variables--lists)**
   - **[Control](./docs/syntax.md/#control-statements)**
