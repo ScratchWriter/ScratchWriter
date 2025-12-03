@@ -25,8 +25,9 @@ class AssetPool {
     get_handle(name, n=0) {
         const handle = n===0 ? name : name + '_' + String(n);
         if (this.handles.has(handle)) {
-            return this.get_free(name, n+1);
+            return this.get_handle(name, n+1);
         }
+        this.handles.add(handle);
         return handle;
     }
 }
