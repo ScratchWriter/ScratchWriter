@@ -35,25 +35,25 @@
   - **[Packages](./docs/packages.md)**
   - **[CLI Usage](#cli-usage)**
 
-# ⚙️ Installing
+# Installing
 1. Install [NodeJS](https://nodejs.org/en)
 1. Clone this repo and `cd` into it
 1. `npm install`
 1. `npm link`
 
-# ⌨️ CLI Usage
+# CLI Usage
 ### Example
 ```sh
 sw3 build ./src/main.sw --out-dir ./out/ --out-name my_project
 ```
-### ⚙️ Commands
+### Commands
 | Name     | Command               | Description     |
 | -------- | --------------------- | --------------- |
 | Help     | `sw3 -h`              | print help      |
 | Build    | `sw3 build <input>`   | build a project |
 | Watch    | `sw3 watch <input>`   | build a project when changes are detected in its directory |
 
-### 🎯 Targets
+### Targets
 | Target            | ext                  |  Option             | Default | Description |
 | :---------------: | :------------------: | ------------------- | :-----: | ----------- |
 | Scratch 3         | `.sb3`               | `--target-sb3`      | Yes     | Normal Scratch3 File. |
@@ -61,7 +61,7 @@ sw3 build ./src/main.sw --out-dir ./out/ --out-name my_project
 | project blocks    | `.blocks.json`       | `--target-blocks`   | No      | Streamlined project.json for debugging. |
 | project.json dump | `.project.json`      | `--target-sb3-json` | No      | Dump the contents of the project.json file. |
 
-# 🔨 Building
+# Building
 You will need:
 - NodeJS
 
