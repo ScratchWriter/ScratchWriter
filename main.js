@@ -5,6 +5,7 @@ const fs = require('fs');
 const { program } = require('commander');
 const _chalk = import("chalk").then(m=>m.default);
 const { FileError, CompileError, catch_compiler_errors } = require('./src/errors');
+const terminalLink = require('terminal-link').default;
 
 const app_dir = path.dirname(require.main.filename);
 const libpaths = [path.resolve(app_dir, './lib')];
@@ -198,7 +199,7 @@ async function target_sb3_json(file, sb3, options) {
     const str = await JSON_print(data);
     const outfile = await get_outfile(file, '.project.json', options);
     fs.writeFileSync(outfile, str);
-    console.log(' - sb3-json -> ', outfile);
+    console.log(' - sb3-json -> ', terminalLink(outfile, 'file://'+outfile));
     return outfile;
 }
 
@@ -207,14 +208,14 @@ async function target_blocks(file, sb3, options) {
     const str = await JSON_print(data);
     const outfile = await get_outfile(file, '.blocks.json', options);
     fs.writeFileSync(outfile, str);
-    console.log(' - blocks -> ', outfile);
+    console.log(' - blocks -> ', terminalLink(outfile, 'file://'+outfile));
     return outfile;
 }
 
 async function target_sb3(file, sb3, options) {
     const outfile = await get_outfile(file, '.sb3', options);
     await saveFile(sb3, outfile);
-    console.log(' - sb3 -> ', outfile);
+    console.log(' - sb3 -> ', terminalLink(outfile, 'file://'+outfile));
     return outfile;
 }
 
@@ -239,7 +240,7 @@ async function target_html(file, sb3, options) {
     const result = await packager.package();
     try {
         fs.writeFileSync(outfile, result.data);
-        console.log(' - html -> ', outfile);
+        console.log(' - html ->', terminalLink(outfile, 'file://'+outfile));
         return outfile;
     } catch(err) {
         console.log(' - html -> ERROR');
