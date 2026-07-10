@@ -110,6 +110,7 @@ You can even pass lists around.
 function print_list(list) {
     let n = 0;
     repeat(list.length()) {
+        n += 1;
         console.log(list[n]);
     }
 }
